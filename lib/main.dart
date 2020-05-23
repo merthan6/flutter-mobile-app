@@ -108,16 +108,20 @@ class HomePage extends StatelessWidget {
                         ),
                         SizedBox(height:40,),
                         Container(
-                        child: InkWell(
-                          Text("Don't have an account?",style: TextStyle(color:Colors.grey),),
-                          child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                          child: InkWell(
+                            child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                          ),
                         ),
+                        Container(
+                          child: InkWell(
+                            child: Text("Don't have an account?",style: TextStyle(color:Colors.grey),),
+                          ),
                         ),
                         SizedBox(height:10,),
                         Container(
-                        child: InkWell(
-                          child: Text("Forgot Password" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
-                        ),
+                          child: InkWell(
+                            child: Text("Forgot Password" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                          ),
                         ),
                       ],
                     ),
