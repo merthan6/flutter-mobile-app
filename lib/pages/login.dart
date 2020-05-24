@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
+class LoginPage extends StatefulWidget {
+    @override
+   _LoginPageState createState() => _LoginPageState();
+}
 
-class HomePage extends StatelessWidget {
+class _LoginPageState extends State<LoginPage> {
+  
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +70,8 @@ class HomePage extends StatelessWidget {
                                   border: Border(bottom : BorderSide(color:Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  controller: email,
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration : InputDecoration(
                                     icon: Icon(Icons.person,color: Colors.grey,),
                                     border: InputBorder.none,
@@ -76,6 +86,7 @@ class HomePage extends StatelessWidget {
                                   border: Border(bottom : BorderSide(color:Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  controller: password,
                                   obscureText: true,
                                   decoration : InputDecoration(
                                     icon: Icon(Icons.lock,color: Colors.grey,),
@@ -89,13 +100,17 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height:40,),
-                        Container(
-                          height: 50,
-                          margin : EdgeInsets.symmetric(horizontal:50),
-                          decoration : BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.blue[800]
-                          ),
+                        RaisedButton(
+                          onPressed: () {
+                            if(email.text.isNotEmpty && password.text.isNotEmpty){
+                                debugPrint("selamlar!!");
+                                debugPrint(email.text);
+                                debugPrint(password.text);  
+                                return _buildErrorDialog(context, "Giriş başarılı!!");
+                            } else {
+                                return _buildErrorDialog(context, "Şifre veya email boş olamaz!");
+                            }
+                          },
                           child: Center(
                             child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
@@ -125,6 +140,25 @@ class HomePage extends StatelessWidget {
           ]
         ),
       ) 
+    );
+  }
+
+    Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
     );
   }
 }
