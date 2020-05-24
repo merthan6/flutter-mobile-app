@@ -1,14 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-/* TO DO:  register */
+import 'package:newapp/pages/memberpage.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+    @override
+    _RegisterPageState createState() => _RegisterPageState();
+}
 
+class _RegisterPageState extends State<Register> {
+
+  String username='';
+  String msg = '';
   final email = TextEditingController();
   final password = TextEditingController();
   final name = TextEditingController();
-  final username = TextEditingController();
+  final usernameC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +93,7 @@ class Register extends StatelessWidget {
                                     border: Border(bottom : BorderSide(color:Colors.grey[200]))
                                   ),
                                   child: TextField(
-                                    controller: username,
+                                    controller: usernameC,
                                     decoration : InputDecoration(
                                       icon: Icon(Icons.account_box,color: Colors.grey,),
                                       border: InputBorder.none,
@@ -131,27 +139,29 @@ class Register extends StatelessWidget {
                           SizedBox(height:50,),
                           RaisedButton(
                           onPressed: () {
-                            if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && username.text.isNotEmpty){
-                                debugPrint("selamlar!!");
-                                debugPrint(email.text);
-                                debugPrint(password.text); 
-                                debugPrint(name.text);
-                                debugPrint(username.text); 
-                                _Register();
-                                return _buildErrorDialog(context, "Succcessful Register");
-                            } else {
-                                return _buildErrorDialog(context, "Bütün bilgileri Doldurunuz!");
+                            if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && usernameC.text.isNotEmpty){
+                              _Register();
+                            }else{
+                              setState(() {
+                                msg="Fields must be filled!";
+                              });
                             }
                           },
                           color: Colors.blue[800],
-                          
                           shape: RoundedRectangleBorder( 
-                            borderRadius: BorderRadius.circular(18.0),),
-                          
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                           child: Center(
                             child: Text("Register",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
                         ),
+                        Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                        Container(
+                          child: InkWell(
+                            child: Text("Already have an account?",style: TextStyle(color:Colors.grey),),
+                          ),
+                        ),
+                        SizedBox(height:10,),
                         ],
                       ),
                     ),
@@ -182,12 +192,19 @@ class Register extends StatelessWidget {
     );
 }
   Future<List> _Register() async {
-  final response = await http.post("http://34.72.70.18/api/users/register", body: {
-    "email": email.text,
-    "password": password.text,
-    "name" : name.text,
-    "username" : username.text,
-  });
-
+    final response = await http.post("http://34.72.70.18/api/users/register", body: {
+      "email": email.text.trim(),
+      "password": password.text.trim(),
+      "fullname" : name.text.trim(),
+      "username" : usernameC.text.trim()
+    });
+    
+    if(response.statusCode == 200){
+      Navigator.pushReplacementNamed(context, '/');
+    } else {
+      setState(() {
+        msg="Servers are now unavailable!";
+      });
+    }
   }
 }

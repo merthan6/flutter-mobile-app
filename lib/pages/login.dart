@@ -7,7 +7,7 @@ String username='';
 
 class LoginPage extends StatefulWidget {
     @override
-   _LoginPageState createState() => _LoginPageState();
+    _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -114,16 +114,11 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
                         ),
-                         Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                        Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
                         SizedBox(height:40,),
                         Container(
                           child: InkWell(
                             child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
-                          ),
-                        ),
-                        Container(
-                          child: InkWell(
-                            child: Text("Don't have an account?",style: TextStyle(color:Colors.grey),),
                           ),
                         ),
                         SizedBox(height:10,),
