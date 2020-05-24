@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+String username='';
 
 class LoginPage extends StatefulWidget {
     @override
@@ -13,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   
   final email = TextEditingController();
   final password = TextEditingController();
+  String msg='';
 
   @override
   Widget build(BuildContext context) {
@@ -106,20 +108,13 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height:40,),
                         RaisedButton(
                           onPressed: () {
-                            if(email.text.isNotEmpty && password.text.isNotEmpty){
-                                debugPrint("selamlar!!");
-                                debugPrint(email.text);
-                                debugPrint(password.text);  
-                                 _login();
-                                 return _buildErrorDialog(context, "login");
-                            } else {
-                                return _buildErrorDialog(context, "Şifre veya email boş olamaz!");
-                            }
+                            _login();
                           },
                           child: Center(
                             child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
                         ),
+                         Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
                         SizedBox(height:40,),
                         Container(
                           child: InkWell(
@@ -170,9 +165,29 @@ class _LoginPageState extends State<LoginPage> {
   Future<List> _login() async {
   
   final response = await http.post("http://34.72.70.18/api/users/login", body: {
-    "email": email.text,
-    "password": password.text,
+    "email": email.text.trim(),
+    "password": password.text.trim()
   });
+
+  if(response.statusCode == 200){
+    
+    var datauser = json.decode(response.body);
+    
+    if(datauser["data"]["success"] == false){
+      setState(() {
+        msg="Login Fail";
+      });
+    } else {
+      setState(() {
+        username= datauser["data"]["data"]["username"];
+      });
+      Navigator.pushReplacementNamed(context, '/memberpage');
+    }  
+  } else {
+      setState(() {
+        msg="Service unavailable!";
+      });
+  }
 
   }
 }
