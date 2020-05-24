@@ -28,9 +28,9 @@ class _RegisterPageState extends State<Register> {
           gradient : LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.blue[900],
-              Colors.blue[800],
-              Colors.blue[400]
+              Colors.blue[600],
+              Colors.blue[500],
+              Colors.blue[100]
             ]
           )
         ),
@@ -42,7 +42,7 @@ class _RegisterPageState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children : <Widget>[
-                  Text("Register",style: TextStyle(color: Colors.white, fontSize : 40),),
+                  Text("Register",style: TextStyle(color: Colors.white, fontSize : 40,fontWeight: FontWeight.w900),),
                   SizedBox(height : 10,),
                 ]
               ),
@@ -59,7 +59,7 @@ class _RegisterPageState extends State<Register> {
                     child: SingleChildScrollView(
                       child: Column(
                         children : <Widget>[
-                          SizedBox(height:40,),
+                          SizedBox(height:20,),
                           Container(
                             decoration:  BoxDecoration(
                             color: Colors.white,
@@ -136,7 +136,9 @@ class _RegisterPageState extends State<Register> {
                               ]
                             ),
                           ),
-                          SizedBox(height:50,),
+                          SizedBox(height:30,),
+                          Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                          SizedBox(height:20,),
                           RaisedButton(
                           onPressed: () {
                             if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && usernameC.text.isNotEmpty){
@@ -155,7 +157,7 @@ class _RegisterPageState extends State<Register> {
                             child: Text("Register",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
                         ),
-                        Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                        SizedBox(height: 20.0,),
                         Container(
                           child: InkWell(
                             onTap: () => {

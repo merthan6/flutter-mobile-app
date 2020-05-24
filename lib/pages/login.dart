@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 String username='';
@@ -19,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       body : Container(
         padding: EdgeInsets.symmetric(vertical:0),
         width: double.infinity,
@@ -27,22 +27,22 @@ class _LoginPageState extends State<LoginPage> {
           gradient : LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.blue[900],
-              Colors.blue[800],
-              Colors.blue[400]
+              Colors.blue[600],
+              Colors.blue[500],
+              Colors.blue[100]
             ]
           )
         ),
         child: Column(
           children:<Widget>[
-            SizedBox(height : 80,),
+            SizedBox(height : 50,),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children : <Widget>[
-                  Text("Login",style: TextStyle(color: Colors.white, fontSize : 40),),
-                  SizedBox(height : 20,),
+                  Text("Login",style: TextStyle(color: Colors.white, fontSize : 40.0,fontWeight: FontWeight.w900),),
+                  SizedBox(height : 10,),
                 ]
               ),
             ),
@@ -55,82 +55,89 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(30),
-                    child: Column(
-                      children : <Widget>[
-                        SizedBox(height:60,),
-                        Container(
-                          decoration:  BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:BorderRadius.circular(10),
-                            boxShadow:[BoxShadow(
-                            color: Color.fromRGBO(8, 84, 145, .5),
-                            blurRadius: 20,
-                            offset: Offset(0, 10)
-                            )]
-                          ),
-                          child: Column(
-                            children : <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(10.0),
-                                decoration : BoxDecoration(
-                                  border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                ),
-                                child: TextField(
-                                  controller: email,
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration : InputDecoration(
-                                    icon: Icon(Icons.person,color: Colors.grey,),
-                                    border: InputBorder.none,
-                                    hintText : "Email or Username",
-                                    hintStyle : TextStyle(color:Colors.grey)
-                                  )
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10.0),
-                                decoration : BoxDecoration(
-                                  border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                ),
-                                child: TextField(
-                                  controller: password,
-                                  obscureText: true,
-                                  decoration : InputDecoration(
-                                    icon: Icon(Icons.lock,color: Colors.grey,),
-                                    hintText : "Password",
-                                    hintStyle : TextStyle(color:Colors.grey),
-                                    border: InputBorder.none
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children : <Widget>[
+                          SizedBox(height:40,),
+                          Container(
+                            decoration:  BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:BorderRadius.circular(10),
+                              boxShadow:[BoxShadow(
+                              color: Color.fromRGBO(8, 84, 145, .5),
+                              blurRadius: 20,
+                              offset: Offset(0, 10)
+                              )]
+                            ),
+                            child: Column(
+                              children : <Widget>[
+                                Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  decoration : BoxDecoration(
+                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
+                                  ),
+                                  child: TextField(
+                                    controller: email,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration : InputDecoration(
+                                      icon: Icon(Icons.person,color: Colors.grey,),
+                                      border: InputBorder.none,
+                                      hintText : "Email or Username",
+                                      hintStyle : TextStyle(color:Colors.grey)
+                                    )
                                   ),
                                 ),
-                              )
-                            ]
+                                Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  decoration : BoxDecoration(
+                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
+                                  ),
+                                  child: TextField(
+                                    controller: password,
+                                    obscureText: true,
+                                    decoration : InputDecoration(
+                                      icon: Icon(Icons.lock,color: Colors.grey,),
+                                      hintText : "Password",
+                                      hintStyle : TextStyle(color:Colors.grey),
+                                      border: InputBorder.none
+                                    ),
+                                  ),
+                                )
+                              ]
+                            ),
                           ),
-                        ),
-                        SizedBox(height:40,),
-                        RaisedButton(
-                          onPressed: () {
-                            _login();
-                          },
-                          child: Center(
-                            child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
+                          SizedBox(height:30,),
+                          Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                          SizedBox(height:20,),
+                            RaisedButton(
+                              onPressed: () {
+                                _login();
+                              },
+                              color: Colors.blue[500],
+                              shape: RoundedRectangleBorder( 
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold,),),
+                              ),
+                            ),
+                          SizedBox(height:30,),
+                          Container(
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.pushReplacementNamed(context, '/register')
+                              },
+                              child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                            ),
                           ),
-                        ),
-                        Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
-                        SizedBox(height:40,),
-                        Container(
-                          child: InkWell(
-                            onTap: () => {
-                              Navigator.pushReplacementNamed(context, '/register')
-                            },
-                            child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                          SizedBox(height:10,),
+                          Container(
+                            child: InkWell(
+                              child: Text("Forgot Password" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                            ),
                           ),
-                        ),
-                        SizedBox(height:10,),
-                        Container(
-                          child: InkWell(
-                            child: Text("Forgot Password" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     ),
               )
