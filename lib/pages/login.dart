@@ -118,6 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height:40,),
                         Container(
                           child: InkWell(
+                            onTap: () => {
+                              Navigator.pushReplacementNamed(context, '/register')
+                            },
                             child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
                           ),
                         ),

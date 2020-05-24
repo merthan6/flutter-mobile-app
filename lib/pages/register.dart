@@ -158,6 +158,9 @@ class _RegisterPageState extends State<Register> {
                         Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
                         Container(
                           child: InkWell(
+                            onTap: () => {
+                              Navigator.pushReplacementNamed(context, '/')
+                            },
                             child: Text("Already have an account?",style: TextStyle(color:Colors.grey),),
                           ),
                         ),
