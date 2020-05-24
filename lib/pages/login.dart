@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 
 class LoginPage extends StatefulWidget {
     @override
@@ -106,7 +110,8 @@ class _LoginPageState extends State<LoginPage> {
                                 debugPrint("selamlar!!");
                                 debugPrint(email.text);
                                 debugPrint(password.text);  
-                                return _buildErrorDialog(context, "Giriş başarılı!!");
+                                 _login();
+                                 return _buildErrorDialog(context, "login");
                             } else {
                                 return _buildErrorDialog(context, "Şifre veya email boş olamaz!");
                             }
@@ -160,5 +165,14 @@ class _LoginPageState extends State<LoginPage> {
       },
       context: context,
     );
+  }
+
+  Future<List> _login() async {
+  
+  final response = await http.post("http://34.72.70.18/api/users/login", body: {
+    "email": email.text,
+    "password": password.text,
+  });
+
   }
 }
