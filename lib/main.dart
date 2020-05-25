@@ -9,12 +9,12 @@ import 'package:newapp/pages/pairs.dart';
 void main() => runApp(
   MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/Home',
+    initialRoute: '/home',
     routes: {
         '/': (BuildContext context) => LoginPage(),
         '/memberpage': (BuildContext context) => MemberPage(),
         '/register': (BuildContext context) => Register(),
-        '/Home': (BuildContext context) => Home(),
+        '/home': (BuildContext context) => Home(),
         '/pairs': (BuildContext context) => Pairs(),
       },
   )
