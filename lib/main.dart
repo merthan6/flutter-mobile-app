@@ -5,6 +5,7 @@ import 'package:newapp/pages/login.dart';
 import 'package:newapp/pages/memberpage.dart';
 import 'package:newapp/pages/register.dart';
 import 'package:newapp/pages/Home.dart';
+import 'package:newapp/pages/pairs.dart';
 void main() => runApp(
   MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -14,6 +15,7 @@ void main() => runApp(
         '/memberpage': (BuildContext context) => MemberPage(),
         '/register': (BuildContext context) => Register(),
         '/Home': (BuildContext context) => Home(),
+        '/pairs': (BuildContext context) => pairs(),
       },
   )
 );
