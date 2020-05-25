@@ -6,12 +6,6 @@ class Pairs extends StatefulWidget {
 }
 
 class _PairesPageState extends State<Pairs> {
-  final List<String> entries = <String>[
-    'Your Auth Code',
-    'Add Friend',
-    'Approve & Decline Friend'
-  ];
-  final List<int> colorCodes = <int>[600, 500, 100];
   @override
   int page = 0;
   void changePage(int index) {
