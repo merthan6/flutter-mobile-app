@@ -15,7 +15,7 @@ void main() => runApp(
         '/memberpage': (BuildContext context) => MemberPage(),
         '/register': (BuildContext context) => Register(),
         '/Home': (BuildContext context) => Home(),
-        '/pairs': (BuildContext context) => pairs(),
+        '/pairs': (BuildContext context) => Pairs(),
       },
   )
 );

@@ -26,6 +26,9 @@ class _MemberPageState extends State<MemberPage> {
     else if(page == 2){
       Navigator.pushReplacementNamed(context, '/register');
     }
+    else if(page == 3){
+      Navigator.pushReplacementNamed(context, '/pairs');
+    }
   }
 
   // _MemberPageState({this.username});
@@ -58,6 +61,12 @@ class _MemberPageState extends State<MemberPage> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
                 title: SizedBox(
                   height: 0,
                 ),
