@@ -149,7 +149,7 @@ class _RegisterPageState extends State<Register> {
                               });
                             }
                           },
-                          color: Colors.blue[800],
+                          color: Colors.blue[500],
                           shape: RoundedRectangleBorder( 
                             borderRadius: BorderRadius.circular(18.0),
                           ),
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<Register> {
                             onTap: () => {
                               Navigator.pushReplacementNamed(context, '/')
                             },
-                            child: Text("Already have an account?",style: TextStyle(color:Colors.grey),),
+                            child: Text("Already have an account?",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),),
                           ),
                         ),
                         SizedBox(height:10,),
