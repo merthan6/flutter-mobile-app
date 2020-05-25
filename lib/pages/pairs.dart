@@ -191,14 +191,22 @@ class _PairesPageState extends State<Pairs> {
                     SizedBox(
                       height: 10,
                     ),
-                    FloatingActionButton.extended(
-                      onPressed: () {
-                        // Add your onPressed code here!
-                      },
-                      label: Text('Sıfırla'),
-                      icon: Icon(Icons.restore),
-                      backgroundColor: Colors.pink,
-                    ),
+                    RaisedButton(
+                      onPressed: () {},
+                      color: Colors.purple[500],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Sıfırla",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
