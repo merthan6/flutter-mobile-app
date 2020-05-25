@@ -18,6 +18,32 @@ class _RegisterPageState extends State<Register> {
   final name = TextEditingController();
   final usernameC = TextEditingController();
 
+  static Widget textFieldContainer(TextEditingController controller, String text, IconData icon) => Container(
+    padding: EdgeInsets.all(5.0),
+    decoration : BoxDecoration(
+      border: Border(bottom : BorderSide(color:Colors.grey[200]))
+    ),
+    child: TextField(
+      controller: controller,
+      decoration : InputDecoration(
+        icon: Icon(icon,color: Colors.grey,),
+        border: InputBorder.none,
+        hintText : text,
+        hintStyle : TextStyle(color:Colors.grey)
+      )
+    ),
+  );
+
+  void checkRegistiration(){
+    if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && usernameC.text.isNotEmpty){
+      _Register();
+    }else{
+      setState(() {
+        msg="Fields must be filled!";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,102 +79,38 @@ class _RegisterPageState extends State<Register> {
                 decoration : BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft : Radius.circular(60),topRight : Radius.circular(60)) 
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(30),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children : <Widget>[
-                          SizedBox(height:20,),
-                          Container(
-                            decoration:  BoxDecoration(
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(30),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children : <Widget>[
+                        SizedBox(height:20,),
+                        Container(
+                          decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:BorderRadius.circular(10),
-                              boxShadow:[BoxShadow(
+                            boxShadow:[BoxShadow(
                               color: Color.fromRGBO(8, 84, 145, .5),
                               blurRadius: 20,
                               offset: Offset(0, 10)
-                              )]
-                            ),
-                            child: Column(
-                              children : <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  decoration : BoxDecoration(
-                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                  ),
-                                  child: TextField(
-                                    controller: name,
-                                    decoration : InputDecoration(
-                                      icon: Icon(Icons.person,color: Colors.grey,),
-                                      border: InputBorder.none,
-                                      hintText : "Name and Surname",
-                                      hintStyle : TextStyle(color:Colors.grey)
-                                    )
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  decoration : BoxDecoration(
-                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                  ),
-                                  child: TextField(
-                                    controller: usernameC,
-                                    decoration : InputDecoration(
-                                      icon: Icon(Icons.account_box,color: Colors.grey,),
-                                      border: InputBorder.none,
-                                      hintText : "Username",
-                                      hintStyle : TextStyle(color:Colors.grey)
-                                    )
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  decoration : BoxDecoration(
-                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                  ),
-                                  child: TextField(
-                                    controller: email,
-                                    decoration : InputDecoration(
-                                      icon: Icon(Icons.mail,color: Colors.grey,),
-                                      border: InputBorder.none,
-                                      hintText : "Email",
-                                      hintStyle : TextStyle(color:Colors.grey)
-                                    )
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  decoration : BoxDecoration(
-                                    border: Border(bottom : BorderSide(color:Colors.grey[200]))
-                                  ),
-                                  child: TextField(
-                                    controller: password,
-                                    obscureText: true,
-                                    decoration : InputDecoration(
-                                      icon: Icon(Icons.lock,color: Colors.grey,),
-                                      hintText : "Password",
-                                      hintStyle : TextStyle(color:Colors.grey),
-                                      border: InputBorder.none
-                                    ),
-                                  ),
-                                )
-                              ]
-                            ),
+                              )
+                            ]
                           ),
-                          SizedBox(height:30,),
-                          Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
-                          SizedBox(height:20,),
-                          RaisedButton(
-                          onPressed: () {
-                            if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && usernameC.text.isNotEmpty){
-                              _Register();
-                            }else{
-                              setState(() {
-                                msg="Fields must be filled!";
-                              });
-                            }
-                          },
+                          child: Column(
+                            children : <Widget>[
+                              textFieldContainer(name,"Your Fullname",Icons.person),
+                              textFieldContainer(usernameC,"Username",Icons.account_box),
+                              textFieldContainer(email,"Email",Icons.mail),
+                              textFieldContainer(password,"Password",Icons.lock),
+                            ]
+                          ),
+                        ),
+                        SizedBox(height:30,),
+                        Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
+                        SizedBox(height:20,),
+                        RaisedButton(
+                          onPressed: checkRegistiration,
                           color: Colors.blue[500],
                           shape: RoundedRectangleBorder( 
                             borderRadius: BorderRadius.circular(18.0),
@@ -167,10 +129,10 @@ class _RegisterPageState extends State<Register> {
                           ),
                         ),
                         SizedBox(height:10,),
-                        ],
-                      ),
+                      ],
                     ),
-                    ),
+                  ),
+                ),
               )
             ) 
           ]
@@ -186,24 +148,25 @@ class _RegisterPageState extends State<Register> {
           content: Text(_message),
           actions: <Widget>[
             FlatButton(
-                child: Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                })
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            )
           ],
         );
       },
       context: context,
     );
-}
+  }
   Future<List> _Register() async {
     final response = await http.post("http://34.72.70.18/api/users/register", body: {
       "email": email.text.trim(),
       "password": password.text.trim(),
       "fullname" : name.text.trim(),
       "username" : usernameC.text.trim()
-    });
-    
+      }
+    );
     if(response.statusCode == 200){
       Navigator.pushReplacementNamed(context, '/');
     } else {
