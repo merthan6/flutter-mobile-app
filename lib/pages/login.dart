@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:newapp/pages/memberpage.dart';
 
 String username='';
 
@@ -124,9 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(height:30,),
                           Container(
                             child: InkWell(
-                              onTap: () => {
-                                Navigator.pushReplacementNamed(context, '/register')
-                              },
+                              onTap: () => { Navigator.pushReplacementNamed(context, '/register') },
                               child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
                             ),
                           ),
@@ -186,7 +185,15 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         username= datauser["data"]["data"]["username"];
       });
-      Navigator.pushReplacementNamed(context, '/memberpage');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MemberPage(),
+          settings: RouteSettings(
+            arguments: username
+          )
+        ),
+      );
     }  
   } else {
       setState(() {

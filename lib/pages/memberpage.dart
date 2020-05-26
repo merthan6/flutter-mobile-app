@@ -10,6 +10,7 @@ class _MemberPageState extends State<MemberPage> {
   Navbar navbar = new Navbar();
   @override
   Widget build(BuildContext context) {
+    final String username = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(title: Text("Sevgilim Nerede?"),),
       bottomNavigationBar: Theme(
@@ -17,7 +18,9 @@ class _MemberPageState extends State<MemberPage> {
         child: navbar,
       ),
       body: Column(
-        
+        children: <Widget>[
+          Text("$username"),
+        ],
       )
     );
   }
