@@ -19,119 +19,151 @@ class _PairesPageState extends State<Pairs> {
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
         child: navbar
       ),
-      body: Container(
-        padding: const EdgeInsets.all(12.0),
-        child: Container(
-          width: 500,
-          height: 540,
-          child: Material(
-            color: Colors.grey[300],
-            elevation: 14.0,
-            borderRadius: BorderRadius.circular(10.0),
-            shadowColor: Colors.blue,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(8),
-                    children: <Widget>[
-                      Container(
-                        height: 50,
-                        child: const Text.rich(
-                          TextSpan(
-                            text: 'Gönderen:', // default text style
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: ' atakde ',
-                                style: TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                )
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      RaisedButton(
+      body: SingleChildScrollView(
+        child: Column(
+        children: <Widget>[ 
+          Container(
+            height : 180,
+          child :Card(
+            shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5.0,
+            child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            leading: Icon(Icons.person, size: 50),
+            title: Text('Name Surname'),
+            subtitle: Text('Username'),
+          ),
+          SizedBox(height :30,),
+          ButtonBar(
+                children: <Widget>[
+                  RaisedButton(
                         onPressed: () {},
                         color: Colors.green[500],
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),),
-                        child: Center(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Center( 
                           child: Text(
                             "Kabul et",
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                      RaisedButton(
+                  RaisedButton(
                         onPressed: () {},
                         color: Colors.red[500],
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         child: Center(
                           child: Text(
                             "Reddet",
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                      Divider(),
-                      Container(
-                        height: 50,
-                        child: Text(
-                          "Bağlantı Ekle:",
-                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Bağlantı kodunu giriniz.'
-                          ),
-                      ),
-                      RaisedButton(
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ),
+            Container(
+            height : 180,
+            child :Card(
+            shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5.0,
+            child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            title: Text('Kod Giriniz',style: TextStyle(fontSize : 20,fontWeight: FontWeight.w900),),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.edit),
+              border: InputBorder.none,
+              hintText: 'Bağlantı kodunu giriniz.'),
+          ),
+          
+          ButtonBar(
+                children: <Widget>[
+                  RaisedButton(
                         onPressed: () {},
                         color: Colors.blue[500],
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         child: Center(
                           child: Text(
-                            "Gonder",
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
+                            "Gönder",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                      Divider(),
-                      Text(
-                        "Bağlantı Kodunuz:",
-                        style:TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox( height: 5,),
-                      Container(
-                        height: 30,
-                        child: Text(
-                          "15123AXEQWE%?ADSF",
-                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      RaisedButton(
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ),
+            Container(
+            height : 180,
+            child :Card(
+            shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5.0,
+            child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            title: Text('Kodunuz',style: TextStyle(fontSize : 20,fontWeight: FontWeight.w900),),
+            subtitle: Text('23467ABGHL54SD'),
+          ),
+          SizedBox(height : 30,),
+          ButtonBar(
+                children: <Widget>[
+                  RaisedButton(
                         onPressed: () {},
-                        color: Colors.purple[500],
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),),
+                        color: Colors.blue[500],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         child: Center(
                           child: Text(
                             "Sıfırla",
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
-                ),
-              ]
+                ],
+              ),
             ),
+            ),
+
+            ]
           ),
-        ),
       ),
     );
   }
