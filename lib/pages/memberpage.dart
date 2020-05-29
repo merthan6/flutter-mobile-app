@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberPage extends StatefulWidget {
-    @override
-    _MemberPageState createState() => _MemberPageState();
+  @override
+  _MemberPageState createState() => _MemberPageState();
 }
 
 class _MemberPageState extends State<MemberPage> {
+
+  String userid;
+  String apiToken;
+
+  getSessions() async{
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userid = prefs.getString("user_id") ?? null;
+      apiToken = prefs.getString("apiToken") ?? null;
+    });
+  }
+
+  initState(){
+    super.initState();
+    getSessions();
+  }
+
   Navbar navbar = new Navbar();
+  
   @override
   Widget build(BuildContext context) {
-    final String username = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(title: Text("Sevgilim Nerede?"),),
       bottomNavigationBar: Theme(
@@ -19,7 +37,7 @@ class _MemberPageState extends State<MemberPage> {
       ),
       body: Column(
         children: <Widget>[
-          Text("$username"),
+          Text("$userid"),
         ],
       )
     );

@@ -6,7 +6,7 @@ class Navbar extends StatefulWidget{
 }
 
 class _NavbarState extends State<Navbar> {
-  
+
   int page = 0;
 
   void changePage(int index){
