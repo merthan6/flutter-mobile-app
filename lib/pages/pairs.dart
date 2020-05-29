@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Pairs extends StatefulWidget {
   @override
@@ -9,6 +12,25 @@ class Pairs extends StatefulWidget {
 class _PairesPageState extends State<Pairs> {
 
   Navbar navbar = new Navbar();
+
+  String userid;
+  String apiToken;
+  String authToken;
+  String newAuthToken;
+
+  getSessions() async{
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        userid = prefs.getString("user_id") ?? null;
+        apiToken = prefs.getString("apiToken") ?? null;
+        authToken = prefs.getString("authToken") ?? null;
+      });
+    }
+
+    initState(){
+      super.initState();
+      getSessions();
+    }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +67,7 @@ class _PairesPageState extends State<Pairs> {
                           child: Center(child: Text("Kabul et",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
                         ),
                         RaisedButton(
-                          onPressed: () {},
+                          onPressed: resetAuthToken,
                           color: Colors.red[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                           child: Center(child: Text("Reddet",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
@@ -94,9 +116,9 @@ class _PairesPageState extends State<Pairs> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const ListTile(
+                    ListTile(
                       title: Text('Kodunuz',style: TextStyle(fontSize : 20,fontWeight: FontWeight.w900),),
-                      subtitle: Text('23467ABGHL54SD'),
+                      subtitle: Text('$newAuthToken'),
                     ),
                     SizedBox(height : 30,),
                     ButtonBar(
@@ -117,5 +139,26 @@ class _PairesPageState extends State<Pairs> {
         ),
       ),
     );
+  }
+  Future<List> resetAuthToken() async {
+    
+    final response = await http.post("http://34.72.70.18/api/users/login", headers: {
+      "Authorization": apiToken,
+    });
+
+    if(response.statusCode == 200){
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["success"] == false){
+        // Service unavailable!
+      } else {
+        setState(() {
+          newAuthToken = datauser["data"]["data"];
+        });
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString("authToken", authToken);
+      }  
+    } else {
+     // Service unavailable!
+    }
   }
 }
