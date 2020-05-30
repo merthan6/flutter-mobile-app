@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,19 +18,47 @@ class _PairesPageState extends State<Pairs> {
   String apiToken;
   String authToken;
   String newAuthToken;
+  bool checkStatus = false;
+
+  String requestUsername;
+  String requestFullname;
 
   getSessions() async{
-      final prefs = await SharedPreferences.getInstance();
-      setState(() {
-        userid = prefs.getString("user_id") ?? null;
-        apiToken = prefs.getString("apiToken") ?? null;
-        authToken = prefs.getString("authToken") ?? null;
-      });
-    }
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userid = prefs.getString("user_id") ?? "null";
+      apiToken = prefs.getString("apiToken") ?? "null";
+      authToken = prefs.getString("authToken") ?? "null";
+    });
+  }
 
+  checkPairRequests() async{
+  final http.Response response = await http.post(
+    'http://34.72.70.18/api/users/pairs/check',
+    headers: <String, String>{
+      HttpHeaders.authorizationHeader: apiToken,
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      "authtoken": authToken
+    }),
+  );
+    print(response.statusCode);
+    print(apiToken);
+    if(response.statusCode == 200){
+      print("object");
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["data"]["success"] == true){
+        checkStatus = true;
+        requestFullname = datauser["data"]["data"]["fullname"];
+        requestUsername = datauser["data"]["data"]["username"];
+      }
+    }
+  }
     initState(){
       super.initState();
       getSessions();
+      checkPairRequests();
     }
 
   Widget build(BuildContext context) {
@@ -52,10 +81,10 @@ class _PairesPageState extends State<Pairs> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    const ListTile(
+                    ListTile(
                       leading: Icon(Icons.person, size: 50),
-                      title: Text('Name Surname'),
-                      subtitle: Text('Username'),
+                      title: Text("$requestFullname"),
+                      subtitle: Text("$requestUsername"),
                     ),
                     SizedBox(height :30,),
                     ButtonBar(
@@ -124,7 +153,7 @@ class _PairesPageState extends State<Pairs> {
                     ButtonBar(
                       children: <Widget>[
                         RaisedButton(
-                          onPressed: () {},
+                          onPressed: resetAuthToken,
                           color: Colors.blue[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                           child: Center(child: Text("Sıfırla",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
@@ -142,12 +171,13 @@ class _PairesPageState extends State<Pairs> {
   }
   Future<List> resetAuthToken() async {
     
-    final response = await http.post("http://34.72.70.18/api/users/login", headers: {
+    final response = await http.post("http://34.72.70.18/api/users/resettoken", headers: {
       "Authorization": apiToken,
     });
 
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
+      print(datauser);
       if(datauser["data"]["success"] == false){
         // Service unavailable!
       } else {

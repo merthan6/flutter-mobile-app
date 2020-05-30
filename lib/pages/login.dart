@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
 
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("user_id", user_id);
-        prefs.setString("apiToken", apiToken);
+        prefs.setString("apiToken","Bearer " + apiToken);
         prefs.setString("authToken", authToken);
 
         Navigator.push(
