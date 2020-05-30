@@ -47,7 +47,6 @@ class _PairesPageState extends State<Pairs> {
       ),
     );
     print(response.statusCode);
-    print(apiToken);
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
       if(datauser["data"]["data"]["success"] == true){
@@ -185,6 +184,7 @@ class _PairesPageState extends State<Pairs> {
       } else {
         setState(() {
           newAuthToken = datauser["data"]["data"];
+          authToken = newAuthToken;
         });
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("authToken", authToken);
