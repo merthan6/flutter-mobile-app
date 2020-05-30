@@ -45,11 +45,12 @@ class _PairesPageState extends State<Pairs> {
     final response = await http.post("http://34.72.70.18/api/users/pairs/check", body: body, headers: headers);
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
-      print(datauser);
       if(datauser["data"]["success"] == true) {
-        checkStatus = true;
-        requestFullname = datauser["data"]["data"]["fullname"];
-        requestUsername = datauser["data"]["data"]["username"];
+        setState(() {
+          checkStatus = true;
+          requestFullname = datauser["data"]["data"]["fullname"];
+          requestUsername = datauser["data"]["data"]["username"];          
+        });
       }
     }
   }
@@ -62,7 +63,7 @@ class _PairesPageState extends State<Pairs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bağlantı"),
+        title: Text("Pair"),
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
@@ -192,17 +193,13 @@ class _PairesPageState extends State<Pairs> {
   }
 
   Future<List> requestPair() async {
-    print("deneme");
     final response = await http.post("http://34.72.70.18/api/users/pairs/create", headers: {
       "Authorization": apiToken,
     },
     body: {
-      "receiver-token": receiverTokenCTRL.text.trim(),
+      "receiver_token": receiverTokenCTRL.text.trim(),
     });
-    print(receiverTokenCTRL.text.trim());
-    print(response.statusCode);
     if(response.statusCode == 200){
-      print("deneme2");
       var datauser = json.decode(response.body);
       if(datauser["data"]["success"] == false){
         print("There is no matching token!");
