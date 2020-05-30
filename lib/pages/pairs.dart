@@ -24,6 +24,7 @@ class _PairesPageState extends State<Pairs> {
 
   String requestUsername;
   String requestFullname;
+  String requestSenderID;
 
   doInitialActions() async{
     final prefs = await SharedPreferences.getInstance();
@@ -49,7 +50,8 @@ class _PairesPageState extends State<Pairs> {
         setState(() {
           checkStatus = true;
           requestFullname = datauser["data"]["data"]["fullname"];
-          requestUsername = datauser["data"]["data"]["username"];          
+          requestUsername = datauser["data"]["data"]["username"];
+          requestSenderID = datauser["data"]["data"]["id"];
         });
       }
     }
@@ -89,13 +91,13 @@ class _PairesPageState extends State<Pairs> {
                     ButtonBar(
                       children: <Widget>[
                         RaisedButton(
-                          onPressed: () {},
+                          onPressed: acceptRequest,
                           color: Colors.green[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                           child: Center(child: Text("Kabul et",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
                         ),
                         RaisedButton(
-                          onPressed: resetAuthToken,
+                          onPressed: rejectRequest,
                           color: Colors.red[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                           child: Center(child: Text("Reddet",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
@@ -205,6 +207,46 @@ class _PairesPageState extends State<Pairs> {
         print("There is no matching token!");
       } else {
         print("Request created");
+      }  
+    } else {
+     // Service unavailable!
+    }
+  }
+
+  Future<List> acceptRequest() async {
+    final response = await http.post("http://34.72.70.18/api/users/pairs/update", headers: {
+      "Authorization": apiToken,
+    },
+    body: {
+      "approve": "1",
+      "sender_id": requestSenderID,
+    });
+    if(response.statusCode == 200){
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["success"] == false){
+        print("Server Error!");
+      } else {
+        print("Pair Operation Completed!");
+      }  
+    } else {
+     // Service unavailable!
+    }
+  }
+
+  Future<List> rejectRequest() async {
+    final response = await http.post("http://34.72.70.18/api/users/pairs/update", headers: {
+      "Authorization": apiToken,
+    },
+    body: {
+      "approve": "0",
+      "sender_id": requestSenderID,
+    });
+    if(response.statusCode == 200){
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["success"] == false){
+        print("Server Error!");
+      } else {
+        print("Pair Operation Rejected!");
       }  
     } else {
      // Service unavailable!
