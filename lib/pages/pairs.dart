@@ -29,24 +29,26 @@ class _PairesPageState extends State<Pairs> {
       userid = prefs.getString("user_id") ?? "null";
       apiToken = prefs.getString("apiToken") ?? "null";
       authToken = prefs.getString("authToken") ?? "null";
+      newAuthToken = authToken;
     });
   }
 
   checkPairRequests() async{
-  final http.Response response = await http.post(
-    'http://34.72.70.18/api/users/pairs/check',
-    headers: <String, String>{
-      HttpHeaders.authorizationHeader: apiToken,
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      "authtoken": authToken
-    }),
-  );
+    final http.Response response = await http.post(
+      'http://34.72.70.18/api/users/pairs/check',
+      headers: <String, String>{
+        HttpHeaders.authorizationHeader: apiToken,
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{
+        "authtoken": authToken
+        }
+      ),
+    );
     print(response.statusCode);
     print(apiToken);
     if(response.statusCode == 200){
-      print("object");
       var datauser = json.decode(response.body);
       if(datauser["data"]["data"]["success"] == true){
         checkStatus = true;
@@ -55,11 +57,12 @@ class _PairesPageState extends State<Pairs> {
       }
     }
   }
-    initState(){
-      super.initState();
-      getSessions();
-      checkPairRequests();
-    }
+
+  initState(){
+    super.initState();
+    getSessions();
+    checkPairRequests();
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +180,6 @@ class _PairesPageState extends State<Pairs> {
 
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
-      print(datauser);
       if(datauser["data"]["success"] == false){
         // Service unavailable!
       } else {
