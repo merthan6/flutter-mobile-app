@@ -25,33 +25,28 @@ class _PairesPageState extends State<Pairs> {
   String requestUsername;
   String requestFullname;
 
-  getSessions() async{
+  doInitialActions() async{
     final prefs = await SharedPreferences.getInstance();
+    
     setState(() {
       userid = prefs.getString("user_id") ?? "null";
       apiToken = prefs.getString("apiToken") ?? "null";
       authToken = prefs.getString("authToken") ?? "null";
       newAuthToken = authToken;
     });
-  }
 
-  checkPairRequests() async{
-    final http.Response response = await http.post(
-      'http://34.72.70.18/api/users/pairs/check',
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: apiToken,
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(
-        <String, String>{
-        "authtoken": authToken
-        }
-      ),
-    );
-    print(response.statusCode);
+    Map<String,String> headers = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization':'$apiToken'
+    };
+
+    var body = json.encode({"authtoken":authToken});
+    final response = await http.post("http://34.72.70.18/api/users/pairs/check", body: body, headers: headers);
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
-      if(datauser["data"]["data"]["success"] == true){
+      print(datauser);
+      if(datauser["data"]["success"] == true) {
         checkStatus = true;
         requestFullname = datauser["data"]["data"]["fullname"];
         requestUsername = datauser["data"]["data"]["username"];
@@ -61,8 +56,7 @@ class _PairesPageState extends State<Pairs> {
 
   initState(){
     super.initState();
-    getSessions();
-    checkPairRequests();
+    doInitialActions();
   }
 
   Widget build(BuildContext context) {
