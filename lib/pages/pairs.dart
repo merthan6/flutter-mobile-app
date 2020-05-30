@@ -14,6 +14,8 @@ class _PairesPageState extends State<Pairs> {
 
   Navbar navbar = new Navbar();
 
+  final receiverTokenCTRL = TextEditingController();  
+
   String userid;
   String apiToken;
   String authToken;
@@ -119,6 +121,7 @@ class _PairesPageState extends State<Pairs> {
                   children: <Widget>[
                     const ListTile(title: Text('Kod Giriniz',style: TextStyle(fontSize : 20,fontWeight: FontWeight.w900),),),
                     TextField(
+                      controller: receiverTokenCTRL,
                       decoration: InputDecoration(
                         icon: Icon(Icons.edit),
                         border: InputBorder.none,
@@ -128,7 +131,7 @@ class _PairesPageState extends State<Pairs> {
                     ButtonBar(
                       children: <Widget>[
                         RaisedButton(
-                          onPressed: () {},
+                          onPressed: requestPair,
                           color: Colors.blue[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                           child: Center(child: Text("Gönder",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
@@ -176,7 +179,7 @@ class _PairesPageState extends State<Pairs> {
     final response = await http.post("http://34.72.70.18/api/users/resettoken", headers: {
       "Authorization": apiToken,
     });
-
+  
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
       if(datauser["data"]["success"] == false){
@@ -188,6 +191,29 @@ class _PairesPageState extends State<Pairs> {
         });
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("authToken", authToken);
+      }  
+    } else {
+     // Service unavailable!
+    }
+  }
+
+  Future<List> requestPair() async {
+    print("deneme");
+    final response = await http.post("http://34.72.70.18/api/users/pairs/create", headers: {
+      "Authorization": apiToken,
+    },
+    body: {
+      "receiver-token": receiverTokenCTRL.text.trim(),
+    });
+    print(receiverTokenCTRL.text.trim());
+    print(response.statusCode);
+    if(response.statusCode == 200){
+      print("deneme2");
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["success"] == false){
+        print("There is no matching token!");
+      } else {
+        print("Request created");
       }  
     } else {
      // Service unavailable!
