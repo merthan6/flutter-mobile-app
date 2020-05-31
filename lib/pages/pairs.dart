@@ -74,39 +74,41 @@ class _PairesPageState extends State<Pairs> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[ 
-            Container(
-              height : 180,
-              child :Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                elevation: 5.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.person, size: 50),
-                      title: Text("$requestFullname"),
-                      subtitle: Text("$requestUsername"),
-                    ),
-                    SizedBox(height :30,),
-                    ButtonBar(
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: acceptRequest,
-                          color: Colors.green[500],
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                          child: Center(child: Text("Kabul et",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
-                        ),
-                        RaisedButton(
-                          onPressed: rejectRequest,
-                          color: Colors.red[500],
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                          child: Center(child: Text("Reddet",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
-                        ),
-                      ],
-                    ),
-                  ],
+            if(checkStatus)(
+              Container(
+                height : 180,
+                child :Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                  elevation: 5.0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.person, size: 50),
+                        title: Text("$requestFullname"),
+                        subtitle: Text("$requestUsername"),
+                      ),
+                      SizedBox(height :30,),
+                      ButtonBar(
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: acceptRequest,
+                            color: Colors.green[500],
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                            child: Center(child: Text("Kabul et",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
+                          ),
+                          RaisedButton(
+                            onPressed: rejectRequest,
+                            color: Colors.red[500],
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                            child: Center(child: Text("Reddet",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              )
             ),
             Container(
               height : 180,
@@ -227,6 +229,9 @@ class _PairesPageState extends State<Pairs> {
         print("Server Error!");
       } else {
         print("Pair Operation Completed!");
+        setState(() {
+          checkStatus = false;
+        });
       }  
     } else {
      // Service unavailable!
@@ -246,6 +251,9 @@ class _PairesPageState extends State<Pairs> {
       if(datauser["data"]["success"] == false){
         print("Server Error!");
       } else {
+        setState(() {
+          checkStatus = false;
+        });
         print("Pair Operation Rejected!");
       }  
     } else {
