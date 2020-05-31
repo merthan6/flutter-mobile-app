@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 String user_id;
 String apiToken;
 String authToken;
+String username;
+String fullname;
 
 class LoginPage extends StatefulWidget {
     @override
@@ -181,12 +183,16 @@ class _LoginPageState extends State<LoginPage> {
           user_id = datauser["data"]["data"]["id"];
           apiToken = datauser["data"]["token"];
           authToken = datauser["data"]["data"]["authtoken"];
+          username = datauser["data"]["data"]["username"];
+          fullname = datauser["data"]["data"]["fullname"];
         });
 
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("user_id", user_id);
         prefs.setString("apiToken","Bearer " + apiToken);
         prefs.setString("authToken", authToken);
+        prefs.setString("username", username);
+        prefs.setString("fullname", fullname);
 
         Navigator.push(
           context,

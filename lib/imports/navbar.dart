@@ -24,7 +24,7 @@ class _NavbarState extends State<Navbar> {
       Navigator.pushReplacementNamed(context, '/memberpage');
     }
     else if(page == 2){
-      Navigator.pushReplacementNamed(context, '/memberpage');
+      Navigator.pushReplacementNamed(context, '/profile');
     }
     else if(page == 3){
       Navigator.pushReplacementNamed(context, '/pairs');
