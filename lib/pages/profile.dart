@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:newapp/pages/profile_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './profile_drawer.dart';
 
 class ProfilePage extends StatefulWidget {
   @override  
@@ -21,7 +23,6 @@ class _ProfilePageState extends State<ProfilePage> {
       fullname = prefs.getString("fullname");
     });
   }
-
   @override
   void initState() {
     getUserInfo();
@@ -32,9 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
+        
         title: Text(
           'Profile',
           style: TextStyle(
@@ -44,14 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         backgroundColor: Colors.blue[400],
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_vert,color: Colors.white,),
-            onPressed: () {},
-          )
-        ],
+        elevation: 0.0,  
       ),
+      drawer: ProfileDrawer(),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
         child: navbar
