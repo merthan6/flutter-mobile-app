@@ -30,23 +30,24 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.grey,
+          color: Colors.white,
         ),
         title: Text(
           'Profile',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.blue[400],
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.more_vert,color: Colors.grey,),
+            icon: Icon(Icons.more_vert,color: Colors.white,),
             onPressed: () {},
           )
         ],
@@ -55,99 +56,125 @@ class _ProfilePageState extends State<ProfilePage> {
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
         child: navbar
       ),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Hero(
-                tag: 'assets/images/Sembolic.jpg',
-                child: Container(
-                  height: 125.0,
-                  width: 125.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(62.5),
-                    border: Border.all(
-                      color: Colors.grey[400],
-                      width: 3,
-                    ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/images/Sembolic.jpg')
-                    )
-                  ),
+      body: Container(
+              child: Column(
+          children: <Widget>[
+            Container(
+              decoration : BoxDecoration(
+                gradient: LinearGradient( 
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                colors: [Colors.blue[400],Colors.blue[100]],
                 ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft : Radius.circular(50.0),
+                  bottomRight : Radius.circular(50.0),
+                )
               ),
-              SizedBox(height: 25.0,),
-              Text(
-                '$fullname',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-              SizedBox(height: 4.0),
-              Text(
-                '$username',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Colors.grey
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child : Container(
+                width : double.infinity,
+                height : 245.0,
+                child: Column(
                   children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '24k',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold
+                    SizedBox(height:10.0,),
+                    Hero(
+                      tag: 'assets/images/Sembolic.jpg',
+                      child: Container(
+                        height: 125.0,
+                        width: 125.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(62.5),
+                          border: Border.all(
+                            color: Colors.blue[100],
+                            width: 2,
                           ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/Sembolic.jpg')
+                          )
                         ),
-                        SizedBox(height: 5.0,),
-                        Text('FOLLOWERS'),
-                      ],
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '22',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 5.0,),
-                        Text('TRIPS'),
-                      ],
+                    SizedBox(height: 10.0,),
+                    Text(
+                      '$fullname',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.white, 
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '25',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 5.0,),
-                        Text('BUCKET LIST'),
-                      ],
+                    SizedBox(height: 4.0),
+                    Text(
+                      '$username',
+                      style: TextStyle(
+                        fontFamily: 'Raleway',
+                        color: Colors.white
+                      ),
                     ),
+                    SizedBox(height : 10.0,),
                   ],
                 ),
-              )
-            ],
-          )
-        ],
+              ),
+            ),
+            SizedBox(height : 10.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children :<Widget>[
+                Icon(Icons.favorite,color : Colors.red,size : 80.0)
+              ]
+            ),
+            SizedBox(height : 10.0,),
+            Container(
+              decoration : BoxDecoration(
+                gradient: LinearGradient( 
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.blue[100],Colors.blue[400]],
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft : Radius.circular(50.0),
+                  topRight : Radius.circular(50.0),
+                )
+              ),
+              child : Container(
+                width : double.infinity,
+                height : 200.0,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height:40.0,),
+                    Hero(
+                      tag: 'assets/images/Sembolic.jpgg',
+                      child: Container(
+                        height: 100.0,
+                        width: 100.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(62.5),
+                          border: Border.all(
+                            color: Colors.blue[100],
+                            width: 2,
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/Sembolic.jpg')
+                          )
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text(
+                      '$fullname',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height : 10.0,),
+                  ],
+                ),
+              ),
+            ),
+          ]
+        ),
       ),
     );
   }
