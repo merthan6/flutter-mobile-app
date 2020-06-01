@@ -11,8 +11,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   
-  Navbar navbar = new Navbar();
-  
   String username;
   String fullname;
 
@@ -31,9 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      
       appBar: AppBar(
-        
         title: Text(
           'Profile',
           style: TextStyle(
@@ -48,10 +44,10 @@ class _ProfilePageState extends State<ProfilePage> {
       drawer: ProfileDrawer(),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
-        child: navbar
+        child: Navbar()
       ),
       body: Container(
-              child: Column(
+        child: Column(
           children: <Widget>[
             Container(
               decoration : BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:newapp/pages/profile_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberPage extends StatefulWidget {
@@ -24,8 +25,6 @@ class _MemberPageState extends State<MemberPage> {
     super.initState();
     getSessions();
   }
-
-  Navbar navbar = new Navbar();
   
   @override
   Widget build(BuildContext context) {
@@ -33,8 +32,9 @@ class _MemberPageState extends State<MemberPage> {
       appBar: AppBar(title: Text("Sevgilim Nerede?"),),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[100]),
-        child: navbar,
+        child: Navbar(),
       ),
+      drawer: ProfileDrawer(),
       body: Column(
         children: <Widget>[
           Text("$userid"),

@@ -11,6 +11,7 @@ String apiToken;
 String authToken;
 String username;
 String fullname;
+String emailUser;
 
 class LoginPage extends StatefulWidget {
     @override
@@ -180,11 +181,13 @@ class _LoginPageState extends State<LoginPage> {
         });
       } else {
         setState(() {
+          print(datauser);
           user_id = datauser["data"]["data"]["id"];
           apiToken = datauser["data"]["token"];
           authToken = datauser["data"]["data"]["authtoken"];
           username = datauser["data"]["data"]["username"];
           fullname = datauser["data"]["data"]["fullname"];
+          emailUser = datauser["data"]["data"]["email"];
         });
 
         final prefs = await SharedPreferences.getInstance();
@@ -193,6 +196,7 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString("authToken", authToken);
         prefs.setString("username", username);
         prefs.setString("fullname", fullname);
+        prefs.setString("email", emailUser);
 
         Navigator.push(
           context,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:newapp/pages/profile_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,8 +12,6 @@ class Pairs extends StatefulWidget {
 }
 
 class _PairesPageState extends State<Pairs> {
-
-  Navbar navbar = new Navbar();
 
   final receiverTokenCTRL = TextEditingController();  
 
@@ -69,8 +68,9 @@ class _PairesPageState extends State<Pairs> {
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
-        child: navbar
+        child: Navbar()
       ),
+      drawer: ProfileDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[ 
