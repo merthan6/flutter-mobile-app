@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newapp/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileDrawer extends StatefulWidget {
@@ -110,7 +111,10 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
           SizedBox(height : 140.0,),
           ListTile(
             leading: Icon(Icons.exit_to_app,color : Colors.black,size : 30.0),
-            onTap: () => Icons.forward_30,
+            onTap: () =>{ 
+              Icons.forward_30,
+              _logout()
+            },
             title: Text('Logout',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -123,4 +127,21 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
       ) 
     );
   }
+
+  void _logout() async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("user_id", null);
+    prefs.setString("apiToken", null);
+    prefs.setString("authToken", null);
+    prefs.setString("username", null);
+    prefs.setString("fullname", null);
+    prefs.setString("email", null);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
+  }
+
 }
