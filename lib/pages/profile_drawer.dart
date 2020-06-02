@@ -53,8 +53,10 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
                     decoration : BoxDecoration(
                       borderRadius: BorderRadius.circular(62.5),
                       border: Border.all(color: Colors.grey[100],width: 2,),
-                      image : DecorationImage(fit: BoxFit.cover,image : AssetImage('assets/images/Sembolic.jpg'),)
-                    )
+                      image : DecorationImage(fit: BoxFit.cover, image : AssetImage('assets/images/Sembolic.jpg'),),
+                    ),
+                    child: Icon(Icons.add_a_photo,color: Colors.grey,),
+                    alignment: Alignment(-1.1,1.35)
                   ),
                 ],
               ),
