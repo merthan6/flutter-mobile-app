@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:newapp/pages/memberpage.dart';
+import 'package:newapp/pages/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String user_id;
@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MemberPage(),
+            builder: (context) => ProfilePage(),
           ),
         );
       }  

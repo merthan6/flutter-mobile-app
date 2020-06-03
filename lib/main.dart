@@ -7,6 +7,7 @@ import 'package:newapp/pages/register.dart';
 import 'package:newapp/pages/Home.dart';
 import 'package:newapp/pages/pairs.dart';
 import 'package:newapp/pages/profile.dart';
+import 'package:newapp/pages/location.dart';
 void main() => runApp(
   MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -18,6 +19,7 @@ void main() => runApp(
         '/home': (BuildContext context) => Home(),
         '/pairs': (BuildContext context) => Pairs(),
         '/profile': (BuildContext context) => ProfilePage(),
+        '/location': (BuildContext context) => MapSample(),
       },
   )
 );

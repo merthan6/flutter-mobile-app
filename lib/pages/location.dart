@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Google Maps Demo',
-      home: MapSample(),
-    );
-  }
-}
+import 'package:newapp/imports/navbar.dart';
 
 class MapSample extends StatefulWidget {
   @override
@@ -42,6 +32,7 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
       ),
+      bottomNavigationBar: Navbar(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
         label: Text('To the lake!'),
