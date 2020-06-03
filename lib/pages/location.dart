@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapSample extends StatefulWidget {
   @override
@@ -10,6 +11,17 @@ class MapSample extends StatefulWidget {
 
 class MapSampleState extends State<MapSample> {
   Completer<GoogleMapController> _controller = Completer();
+
+  void doStuff() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setInt("navbarIndex", 0);
+    });
+  }
+  @override
+  void initState() {
+    doStuff();
+  }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),

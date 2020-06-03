@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Navbar extends StatefulWidget{
   @override
@@ -7,7 +8,19 @@ class Navbar extends StatefulWidget{
 
 class _NavbarState extends State<Navbar> {
 
-  int page = 0;
+  void getNavbarIndex() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      page = prefs.getInt("navbarIndex");
+    });
+  }
+
+  @override
+  void initState(){
+    getNavbarIndex();
+  }
+  
+  int page = 1;
 
   void changePage(int index){
     setState(() {
@@ -15,6 +28,7 @@ class _NavbarState extends State<Navbar> {
     });
     gotoPage(page);
   }
+
   Widget gotoPage(int page){
     if(page == 0){
       Navigator.pushReplacementNamed(context, '/location');

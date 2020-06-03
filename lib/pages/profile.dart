@@ -19,6 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       username = prefs.getString("username");
       fullname = prefs.getString("fullname");
+      prefs.setInt("navbarIndex", 1);
     });
   }
   @override

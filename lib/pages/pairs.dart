@@ -32,6 +32,7 @@ class _PairesPageState extends State<Pairs> {
       userid = prefs.getString("user_id") ?? "null";
       apiToken = prefs.getString("apiToken") ?? "null";
       authToken = prefs.getString("authToken") ?? "null";
+      prefs.setInt("navbarIndex",2);
       newAuthToken = authToken;
     });
 

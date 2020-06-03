@@ -197,6 +197,7 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString("username", username);
         prefs.setString("fullname", fullname);
         prefs.setString("email", emailUser);
+        prefs.setInt("navbarIndex",1);
 
         Navigator.push(
           context,
