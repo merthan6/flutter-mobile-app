@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:newapp/pages/location_test.dart';
+import 'package:newapp/pages/location.dart';
 import 'package:newapp/pages/login.dart';
 import 'package:newapp/pages/memberpage.dart';
 import 'package:newapp/pages/register.dart';
@@ -20,8 +20,7 @@ void main() => runApp(
         '/home': (BuildContext context) => Home(),
         '/pairs': (BuildContext context) => Pairs(),
         '/profile': (BuildContext context) => ProfilePage(),
-        '/location': (BuildContext context) => MapSample(),
-        '/location_test': (BuildContext context) => FindLocation(),
+        '/location': (BuildContext context) => FindLocation(),
       },
   )
 );
