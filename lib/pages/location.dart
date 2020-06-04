@@ -111,7 +111,7 @@ class _FindLocationState extends State<FindLocation>{
     return Scaffold(
       appBar: AppBar(title: Text("Find Pair"),),
       body:GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.normal,
         initialCameraPosition: initialLocation,
         markers: Set.of((marker != null) ? [marker]: []),
         circles: Set.of((circle != null) ? [circle]: []),
