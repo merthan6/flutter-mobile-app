@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:newapp/imports/navbar.dart';
+import 'package:newapp/pages/profile_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FindLocation extends StatefulWidget{
@@ -111,6 +112,7 @@ class _FindLocationState extends State<FindLocation>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(title: Text("Find Pair"),),
+      drawer: ProfileDrawer(),
       body:GoogleMap(
         zoomGesturesEnabled: true,
         mapType: MapType.normal,
