@@ -110,19 +110,28 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
               ),
             ),
           ),
-          SizedBox(height : 140.0,),
-          ListTile(
-            leading: Icon(Icons.exit_to_app,color : Colors.black,size : 30.0),
-            onTap: () =>{ 
-              Icons.forward_30,
-              _logout()
-            },
-            title: Text('Logout',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 15.0,
-                color: Colors.black,
+          SizedBox(height: 140,), 
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomLeft,
+                child: Column(children: <Widget>[
+                ListTile(
+                leading: Icon(Icons.exit_to_app,color : Colors.black,size : 30.0),
+                onTap: () =>{ 
+                  Icons.forward_30,
+                  _logout()
+                },
+                title: Text('Logout',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
               ),
+                ],
+                )
+                
             ),
           ),
         ]
