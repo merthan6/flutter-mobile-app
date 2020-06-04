@@ -31,7 +31,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget gotoPage(int page){
     if(page == 0){
-      Navigator.pushReplacementNamed(context, '/location');
+      Navigator.pushReplacementNamed(context, '/location_test');
     }
     else if(page == 1){
       Navigator.pushReplacementNamed(context, '/profile');
