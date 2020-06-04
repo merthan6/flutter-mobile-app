@@ -19,6 +19,7 @@ class _FindLocationState extends State<FindLocation>{
   GoogleMapController _controller;
   Marker marker;
   Circle circle;
+  double initZoom = 15;
 
   void doStuff() async {
     final prefs = await SharedPreferences.getInstance();
@@ -33,7 +34,7 @@ class _FindLocationState extends State<FindLocation>{
 
   static final CameraPosition initialLocation = CameraPosition(
     target: LatLng(37.427961133580664, 122.0855749655962),
-    zoom: 14.4746
+    zoom: 15.0
   );
 
   Future<Uint8List> getMarker() async {
@@ -81,10 +82,10 @@ class _FindLocationState extends State<FindLocation>{
           _controller.animateCamera(
             CameraUpdate.newCameraPosition(
               new CameraPosition(
-                bearing: 192.8334901395799,
+                bearing: 0.0,
                 target: LatLng(newLocalData.latitude, newLocalData.longitude),
                 tilt: 0,
-                zoom: 18.00
+                zoom: initZoom
               )
             )
           );
@@ -111,12 +112,17 @@ class _FindLocationState extends State<FindLocation>{
     return Scaffold(
       appBar: AppBar(title: Text("Find Pair"),),
       body:GoogleMap(
+        zoomGesturesEnabled: true,
         mapType: MapType.normal,
         initialCameraPosition: initialLocation,
         markers: Set.of((marker != null) ? [marker]: []),
         circles: Set.of((circle != null) ? [circle]: []),
         onMapCreated: (GoogleMapController controller){
           _controller = controller;
+        },
+        onCameraMove:(CameraPosition cameraPosition){
+          initZoom = cameraPosition.zoom;
+          print(cameraPosition.zoom);
         },
       ),
       bottomNavigationBar: Navbar(),
