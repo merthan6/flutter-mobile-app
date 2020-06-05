@@ -128,13 +128,20 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          Column(
+          Row(
             children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(
-                      top: 40.0, bottom: 0, left: 0.0, right: 0),
-                  child: Icon(Icons.arrow_downward,
-                      color: Colors.blueGrey, size: 80.0))
+                      top: 40.0, bottom: 0, left: 110.0, right: 0),
+                          child:Icon(Icons.arrow_downward,
+                          color: Colors.blueGrey, size: 80.0),
+                      ),
+                      Padding(
+                  padding: EdgeInsets.only(
+                      top: 40.0, bottom: 0, left: 10.0, right: 0),
+                          child:Icon(Icons.arrow_upward,
+                          color: Colors.blueGrey, size: 80.0),
+                      )    
             ],
           ),
           Container(
