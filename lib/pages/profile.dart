@@ -20,11 +20,10 @@ class _ProfilePageState extends State<ProfilePage> {
   String fullname;
   String apiToken;
   String authToken;
-  bool checkStatus = false;
+  bool checkStatus;
   String requestFullname;
   String requestUsername;
   String requestSenderID;
-
 
   Size screenSize(BuildContext context) {
     return MediaQuery.of(context).size;
@@ -57,6 +56,9 @@ class _ProfilePageState extends State<ProfilePage> {
     final response = await http.post("http://34.72.70.18/api/users/checkPair", headers: headers);
     if(response.statusCode == 200){
       var datauser = json.decode(response.body);
+      setState(() {
+        checkStatus = false;
+      });
       if(datauser["data"]["success"] == true) {
         setState(() {
           requestFullname = datauser["data"]["data"]["fullname"];
