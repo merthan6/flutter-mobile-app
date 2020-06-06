@@ -25,6 +25,19 @@ class _ProfilePageState extends State<ProfilePage> {
   String requestUsername;
   String requestSenderID;
 
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double screenHeight(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).height / dividedBy;
+  }
+
+  double screenWidth(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).width / dividedBy;
+  }
+
   void getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -257,6 +270,40 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
+          ],
+          if(checkStatus == false)...[
+            SizedBox(height: screenHeight(context,dividedBy: 9)),
+            const Divider(
+              color: Colors.grey,
+              height: 0,
+              thickness: 1,
+              indent: 20,
+              endIndent: 20,
+            ),
+            SizedBox(height: screenHeight(context,dividedBy: 9)),
+            Text(
+              "You have no pair.",
+              style: TextStyle(
+                color: Colors.black87,
+                fontFamily: 'Avenir'
+              ),
+            ),
+            SizedBox(height: screenHeight(context,dividedBy:80),),
+            Text(
+              "Tap to the button and connect with your lover.",
+              style: TextStyle(
+                color: Colors.black87,
+                fontFamily: 'Avenir'
+              ),
+            ),
+            SizedBox(height: screenHeight(context,dividedBy:20),),
+            RaisedButton(
+              onPressed: (){
+                Navigator.pushReplacementNamed(context, '/pairs');
+              },
+              child: Text("Connect!"),
+              color: Colors.blue[500],
+            )
           ],
         ],
       ),
