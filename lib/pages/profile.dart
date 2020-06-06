@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:newapp/pages/profile_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './profile_drawer.dart';
 import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -14,14 +18,41 @@ class _ProfilePageState extends State<ProfilePage> {
   final double _borderRadius = 24;
   String username;
   String fullname;
+  String apiToken;
+  String authToken;
+  bool checkStatus = false;
+  String requestFullname;
+  String requestUsername;
+  String requestSenderID;
 
   void getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString("username");
       fullname = prefs.getString("fullname");
+      apiToken = prefs.getString("apiToken");
+      authToken = prefs.getString("authToken");
       prefs.setInt("navbarIndex", 1);
     });
+
+    Map<String,String> headers = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization':'$apiToken'
+    };
+
+    final response = await http.post("http://34.72.70.18/api/users/checkPair", headers: headers);
+    if(response.statusCode == 200){
+      var datauser = json.decode(response.body);
+      if(datauser["data"]["success"] == true) {
+        setState(() {
+          requestFullname = datauser["data"]["data"]["fullname"];
+          requestUsername = datauser["data"]["data"]["username"];
+          requestSenderID = datauser["data"]["data"]["id"];
+          checkStatus = true;
+        });
+      }
+    }
   }
 
   @override
@@ -46,8 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       drawer: ProfileDrawer(),
       bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
-          child: Navbar()),
+        data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
+        child: Navbar()
+      ),
       body: Column(
         children: <Widget>[
           Container(
@@ -55,43 +87,42 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: const EdgeInsets.only(top: 40.0, right: 8.0, left: 8.0),
               child: Stack(
                 children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                  ),
+                  SizedBox(height: 20.0,),
                   Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(_borderRadius),
-                        gradient: LinearGradient(
-                          colors: [Colors.green, Colors.blue],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 12,
-                            offset: Offset(0, 6),
-                          )
-                        ],
-                      )),
+                    height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(_borderRadius),
+                      gradient: LinearGradient(
+                        colors: [Colors.green, Colors.blue],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow:[
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 12,
+                          offset: Offset(0, 6),
+                        )
+                      ],
+                    )
+                  ),
                   Positioned(
-                      right: 0,
-                      bottom: 0,
-                      top: 0,
-                      child: CustomPaint(
-                        size: Size(100, 150),
-                        painter: CustomCardShapePainter(
-                            _borderRadius, Colors.blue, Colors.green),
-                      )),
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: CustomPaint(
+                      size: Size(100, 150),
+                      painter: CustomCardShapePainter(
+                        _borderRadius, Colors.blue, Colors.green
+                      ),
+                    )
+                  ),
                   Positioned.fill(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(
-                          height: 35.0,
-                        ),
+                        SizedBox(height: 35.0,),
                         ListTile(
                           leading: Container(
                             width: 60.0,
@@ -108,18 +139,23 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          title: Text("Alperen Sarınay",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Avenir',
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.w500)),
-                          subtitle: Text("alperensarinay",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.0,
-                                fontFamily: 'Avenir',
-                              )),
+                          title: Text(
+                            "$fullname",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Avenir',
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                          subtitle: Text(
+                            "$username",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                              fontFamily: 'Avenir',
+                            )
+                          ),
                         ),
                       ],
                     ),
@@ -128,31 +164,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          Row(
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(
-                      top: 40.0, bottom: 0, left: 110.0, right: 0),
-                          child:Icon(Icons.arrow_downward,
-                          color: Colors.blueGrey, size: 80.0),
-                      ),
-                      Padding(
-                  padding: EdgeInsets.only(
-                      top: 40.0, bottom: 0, left: 10.0, right: 0),
-                          child:Icon(Icons.arrow_upward,
-                          color: Colors.blueGrey, size: 80.0),
-                      )    
-            ],
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30.0, right: 8.0, left: 8.0),
-              child: Stack(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
+          if(checkStatus == true) ...[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 40.0, bottom: 0, left: 110.0, right: 0),
+                  child: Icon(Icons.arrow_downward,color: Colors.blueGrey, size: 80.0),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 40.0, bottom: 0, left: 10.0, right: 0),
+                  child: Icon(Icons.arrow_upward,color: Colors.blueGrey, size: 80.0),
+                )    
+              ],
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30.0, right: 8.0, left: 8.0),
+                child: Stack(
+                  children: <Widget>[
+                    SizedBox(height: 20.0,),
+                    Container(
                       height: 150,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(_borderRadius),
@@ -168,63 +199,65 @@ class _ProfilePageState extends State<ProfilePage> {
                             offset: Offset(0, 6),
                           )
                         ],
-                      )),
-                  Positioned(
+                      )
+                    ),
+                    Positioned(
                       right: 0,
                       bottom: 0,
                       top: 0,
                       child: CustomPaint(
                         size: Size(100, 150),
-                        painter: CustomCardShapePainter(
-                          _borderRadius, Colors.orange, Colors.yellow),
-                      )),
-                  Positioned.fill(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 35.0,
-                        ),
-                        ListTile(
-                          leading: Container(
-                            width: 60.0,
-                            height: 64.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(62.5),
-                              border: Border.all(
-                                color: Colors.grey[100],
-                                width: 2,
-                              ),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/images/Sembolic.jpg'),
+                        painter: CustomCardShapePainter(_borderRadius, Colors.orange, Colors.yellow),
+                      )
+                    ),
+                    Positioned.fill(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 35.0,),
+                          ListTile(
+                            leading: Container(
+                              width: 60.0,
+                              height: 64.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(62.5),
+                                border: Border.all(
+                                  color: Colors.grey[100],
+                                  width: 2,
+                                ),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/images/Sembolic.jpg'),
+                                ),
                               ),
                             ),
+                            title: Text(
+                              "$requestFullname",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Avenir',
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w500
+                              )
+                            ),
+                            subtitle: Text(
+                              "$requestUsername",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.0,
+                                fontFamily: 'Avenir',
+                              )
+                            ),
                           ),
-                          title: Text("Merthan Karadeniz",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Avenir',
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w500
-                            )
-                          ),
-                          subtitle: Text("merthankaradeniz",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                              fontFamily: 'Avenir',
-                            )
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
         ],
       ),
     );
