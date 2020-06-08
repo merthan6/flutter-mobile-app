@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:newapp/pages/profile_drawer.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FindLocation extends StatefulWidget{
@@ -21,20 +23,53 @@ class _FindLocationState extends State<FindLocation>{
   Marker marker;
   Circle circle;
   double initZoom = 15;
+  Timer timer;
+  bool isSwitched=false;
+  int timerCnt = 1000;
+  String apiToken;
+  double latidude;
+  double longitude;
 
   void doStuff() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setInt("navbarIndex", 0);
+      apiToken =  prefs.getString("apiToken");
     });
   }
+
+  void shareLocation(String activeStatus) async{
+    Map<String,String> headers = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization':'$apiToken'
+    };
+    
+    var body = json.encode({
+      "isActive": activeStatus,
+      "y_cordinate": latidude,
+      "x_cordinate": longitude,
+    });
+    print("Location Update: 5 seconds");
+    final response = await http.post("http://34.72.70.18/api/users/savelocation", headers: headers, body: body);
+  }
+
   @override
   void initState() {
+    getPairLocation();
     doStuff();
   }
 
+  void getMyLocation() async{
+    var location = await _locationTracker.getLocation();
+    setState(() {
+        latidude = location.latitude;
+        longitude = location.longitude;
+    });
+  }
+
   static final CameraPosition initialLocation = CameraPosition(
-    target: LatLng(37.427961133580664, 122.0855749655962),
+    target: LatLng(41.08, 29),
     zoom: 15.0
   );
 
@@ -67,10 +102,15 @@ class _FindLocationState extends State<FindLocation>{
     });
   }
 
-  void getCurrentLocation() async {
+  void getPairLocation() async {
     try {
       Uint8List imageData = await getMarker();
       var location = await _locationTracker.getLocation();
+
+      setState(() {
+          latidude = location.latitude;
+          longitude = location.longitude;
+      });
 
       updateMarkerAndCircle(location,imageData);
 
@@ -106,6 +146,7 @@ class _FindLocationState extends State<FindLocation>{
         _locationSubscription.cancel();
       }
     super.dispose();
+    timer.cancel();
   }
 
   @override
@@ -124,14 +165,33 @@ class _FindLocationState extends State<FindLocation>{
         },
         onCameraMove:(CameraPosition cameraPosition){
           initZoom = cameraPosition.zoom;
-          print(cameraPosition.zoom);
         },
       ),
+      persistentFooterButtons: <Widget>[
+        Text("Share your location"),
+        Switch(
+          value: isSwitched,
+          onChanged: (value){
+            setState(() {
+              isSwitched=value;
+              if(value == true){
+                timerCnt = 5;
+                timer = Timer.periodic(Duration(seconds: timerCnt), (Timer t) => shareLocation("1"));
+              }else if(value == false){
+                shareLocation("0");
+                timer.cancel();
+              }
+            });
+          },
+          activeTrackColor: Colors.lightGreenAccent,
+          activeColor: Colors.green,
+        ),
+      ],
       bottomNavigationBar: Navbar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.location_searching),
         onPressed: (){
-          getCurrentLocation();
+          getPairLocation();
         },
       ),
     );
