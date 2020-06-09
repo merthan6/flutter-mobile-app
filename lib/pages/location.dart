@@ -29,12 +29,14 @@ class _FindLocationState extends State<FindLocation>{
   String apiToken;
   double latidude;
   double longitude;
+  String myPairID;
 
   void doStuff() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setInt("navbarIndex", 0);
       apiToken =  prefs.getString("apiToken");
+      myPairID = prefs.getString("pair_id");
     });
   }
 

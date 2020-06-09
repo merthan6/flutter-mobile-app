@@ -12,6 +12,7 @@ String authToken;
 String username;
 String fullname;
 String emailUser;
+String myPairID;
 
 class LoginPage extends StatefulWidget {
     @override
@@ -188,6 +189,10 @@ class _LoginPageState extends State<LoginPage> {
           username = datauser["data"]["data"]["username"];
           fullname = datauser["data"]["data"]["fullname"];
           emailUser = datauser["data"]["data"]["email"];
+          if(datauser["data"]["data"]["pair_id"] != null)
+            myPairID = datauser["data"]["data"]["pair_id"];
+          else
+            myPairID = null;
         });
 
         final prefs = await SharedPreferences.getInstance();
@@ -197,6 +202,7 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString("username", username);
         prefs.setString("fullname", fullname);
         prefs.setString("email", emailUser);
+        prefs.setString("pair_id", myPairID);
         prefs.setInt("navbarIndex",1);
 
         Navigator.push(
