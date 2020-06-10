@@ -24,20 +24,44 @@ class _FindLocationState extends State<FindLocation>{
   Circle circle;
   double initZoom = 15;
   Timer timer;
+  Timer timer2;
   bool isSwitched=false;
   int timerCnt = 1000;
   String apiToken;
-  double latidude;
+
+  double latitude;
   double longitude;
-  String myPairID;
+  double myLatitude;
+  double myLongitude;
+
+  String responseMessage;
 
   void doStuff() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setInt("navbarIndex", 0);
       apiToken =  prefs.getString("apiToken");
-      myPairID = prefs.getString("pair_id");
     });
+
+    Map<String,String> headers = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization':'$apiToken'
+    };
+
+    final response = await http.post("http://34.72.70.18/api/users/pairLocation", headers: headers);
+
+    if(response.statusCode == 200){
+      var datauser = json.decode(response.body);
+      setState(() {
+        responseMessage = datauser["data"]["message"];
+        longitude = double.parse(datauser["data"]["longitude"]);
+        latitude = double.parse(datauser["data"]["latitude"]);
+      });
+      print(responseMessage);
+      print("Pair latitude:" + latitude.toString());
+      print("Pair longitude:" + longitude.toString());
+    }
   }
 
   void shareLocation(String activeStatus) async{
@@ -47,26 +71,28 @@ class _FindLocationState extends State<FindLocation>{
       'Authorization':'$apiToken'
     };
     
+    getMyLocation();
+
     var body = json.encode({
       "isActive": activeStatus,
-      "y_cordinate": latidude,
-      "x_cordinate": longitude,
+      "y_cordinate": myLatitude,
+      "x_cordinate": myLongitude,
     });
+
     print("Location Update: 5 seconds");
     final response = await http.post("http://34.72.70.18/api/users/savelocation", headers: headers, body: body);
   }
 
   @override
   void initState() {
-    getPairLocation();
     doStuff();
   }
 
-  void getMyLocation() async{
+  void getMyLocation() async {
     var location = await _locationTracker.getLocation();
     setState(() {
-        latidude = location.latitude;
-        longitude = location.longitude;
+        myLatitude = location.latitude;
+        myLongitude = location.longitude;
     });
   }
 
@@ -107,12 +133,23 @@ class _FindLocationState extends State<FindLocation>{
   void getPairLocation() async {
     try {
       Uint8List imageData = await getMarker();
-      var location = await _locationTracker.getLocation();
+      var dataMap = new Map<String, double>();
+      doStuff();
 
       setState(() {
-          latidude = location.latitude;
-          longitude = location.longitude;
+        dataMap = {
+          'latitude': latitude,
+          'longitude': longitude,
+          'accuracy': 0,
+          'altitude': 0,
+          'speed': 0,
+          'speed_accuracy': 0,
+          'heading': 0,
+          'time' : 0,
+        };
       });
+      
+      var location = new LocationData.fromMap(dataMap);
 
       updateMarkerAndCircle(location,imageData);
 
@@ -120,21 +157,20 @@ class _FindLocationState extends State<FindLocation>{
         _locationSubscription.cancel();
       }
 
-      _locationSubscription = _locationTracker.onLocationChanged.listen((newLocalData){
-        if(_controller != null){
-          _controller.animateCamera(
-            CameraUpdate.newCameraPosition(
-              new CameraPosition(
-                bearing: 0.0,
-                target: LatLng(newLocalData.latitude, newLocalData.longitude),
-                tilt: 0,
-                zoom: initZoom
-              )
+      if(_controller != null){
+        _controller.animateCamera(
+          CameraUpdate.newCameraPosition(
+            new CameraPosition(
+              bearing: 0.0,
+              target: LatLng(latitude, longitude),
+              tilt: 0,
+              zoom: initZoom
             )
-          );
-          updateMarkerAndCircle(newLocalData,imageData);
-        }
-      });
+          )
+        );
+        updateMarkerAndCircle(location,imageData);
+      }
+      
     } on PlatformException catch (e) {
       if(e.code == "PERMISSION_DENIED"){
         debugPrint("Permission Denied");
@@ -149,6 +185,7 @@ class _FindLocationState extends State<FindLocation>{
       }
     super.dispose();
     timer.cancel();
+    timer2.cancel();
   }
 
   @override
@@ -193,6 +230,7 @@ class _FindLocationState extends State<FindLocation>{
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.location_searching),
         onPressed: (){
+          //timer2 = Timer.periodic(Duration(seconds: 1), (Timer t) => getPairLocation());
           getPairLocation();
         },
       ),
