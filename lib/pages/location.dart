@@ -55,8 +55,10 @@ class _FindLocationState extends State<FindLocation>{
       var datauser = json.decode(response.body);
       setState(() {
         responseMessage = datauser["data"]["message"];
-        longitude = double.parse(datauser["data"]["longitude"]);
-        latitude = double.parse(datauser["data"]["latitude"]);
+        if(datauser["data"]["longitude"] != null){
+          longitude = double.parse(datauser["data"]["longitude"]);
+          latitude = double.parse(datauser["data"]["latitude"]);
+        }
       });
       print(responseMessage);
       print("Pair latitude:" + latitude.toString());
@@ -75,8 +77,8 @@ class _FindLocationState extends State<FindLocation>{
 
     var body = json.encode({
       "isActive": activeStatus,
-      "y_cordinate": myLatitude,
-      "x_cordinate": myLongitude,
+      "y_cordinate": myLongitude,
+      "x_cordinate": myLatitude,
     });
 
     print("Location Update: 5 seconds");
