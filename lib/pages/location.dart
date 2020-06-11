@@ -15,6 +15,18 @@ class FindLocation extends StatefulWidget{
   _FindLocationState createState() => _FindLocationState();
 }
 
+Size screenSize(BuildContext context) {
+  return MediaQuery.of(context).size;
+}
+
+double screenHeight(BuildContext context, {double dividedBy = 1}) {
+  return screenSize(context).height / dividedBy;
+}
+
+double screenWidth(BuildContext context, {double dividedBy = 1}) {
+  return screenSize(context).width / dividedBy;
+}
+
 class _FindLocationState extends State<FindLocation>{
 
   StreamSubscription _locationSubscription;
@@ -35,6 +47,7 @@ class _FindLocationState extends State<FindLocation>{
   double myLongitude;
 
   String responseMessage;
+  bool doesHavePair = false;
 
   void doStuff() async {
     final prefs = await SharedPreferences.getInstance();
@@ -48,6 +61,15 @@ class _FindLocationState extends State<FindLocation>{
       'Accept': 'application/json',
       'Authorization':'$apiToken'
     };
+
+    final responseCheck = await http.post("http://34.72.70.18/api/users/checkPair", headers: headers);
+    if(responseCheck.statusCode == 200){
+      var datauser = json.decode(responseCheck.body);
+      setState(() {
+        doesHavePair = datauser["data"]["success"];
+        print(doesHavePair);
+      });
+    }
 
     final response = await http.post("http://34.72.70.18/api/users/pairLocation", headers: headers);
 
@@ -197,18 +219,75 @@ class _FindLocationState extends State<FindLocation>{
       centerTitle: true,
       ),
       drawer: ProfileDrawer(),
-      body:GoogleMap(
-        zoomGesturesEnabled: true,
-        mapType: MapType.normal,
-        initialCameraPosition: initialLocation,
-        markers: Set.of((marker != null) ? [marker]: []),
-        circles: Set.of((circle != null) ? [circle]: []),
-        onMapCreated: (GoogleMapController controller){
-          _controller = controller;
-        },
-        onCameraMove:(CameraPosition cameraPosition){
-          initZoom = cameraPosition.zoom;
-        },
+      body:
+      Column(
+        children: <Widget>[
+          if(doesHavePair == true)...[
+            GoogleMap(
+              zoomGesturesEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: initialLocation,
+              markers: Set.of((marker != null) ? [marker]: []),
+              circles: Set.of((circle != null) ? [circle]: []),
+              onMapCreated: (GoogleMapController controller){
+                _controller = controller;
+              },
+              onCameraMove:(CameraPosition cameraPosition){
+                initZoom = cameraPosition.zoom;
+              },
+            ),
+          ],
+          if(doesHavePair == false)...[
+            SizedBox(height: screenHeight(context,dividedBy: 7)),
+            const Divider(
+              color: Colors.grey,
+              height: 0,
+              thickness: 1,
+              indent: 20,
+              endIndent: 20,
+            ),
+            SizedBox(height: screenHeight(context,dividedBy: 18)),
+            Icon(Icons.warning, color: Colors.red,size: screenHeight(context,dividedBy: 18),),
+            SizedBox(height: screenHeight(context,dividedBy: 18)),
+            Text(
+              "You have no pair.",
+              style: TextStyle(
+                color: Colors.black87,
+                fontFamily: 'Avenir',
+                fontSize: 15.0,
+              ),
+            ),
+            SizedBox(height: screenHeight(context,dividedBy:80),),
+            Text(
+              "Tap to the button and connect with your lover.",
+              style: TextStyle(
+                color: Colors.black87,
+                fontFamily: 'Avenir',
+                fontSize: 15.0,
+              ),
+            ),
+            SizedBox(height: screenHeight(context,dividedBy:17),),
+            RaisedButton(
+              onPressed: (){
+                Navigator.pushReplacementNamed(context, '/pairs');
+              },
+              shape: RoundedRectangleBorder( 
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              
+              child: Text("Connect"),
+              color: Colors.orange[500],
+            ),
+            SizedBox(height: screenHeight(context,dividedBy: 15)),
+            const Divider(
+              color: Colors.grey,
+              height: 0,
+              thickness: 1,
+              indent: 20,
+              endIndent: 20,
+            ),
+          ]
+        ],
       ),
       persistentFooterButtons: <Widget>[
         Text("Share your location"),
@@ -219,7 +298,7 @@ class _FindLocationState extends State<FindLocation>{
               isSwitched=value;
               if(value == true){
                 timerCnt = 5;
-                timer = Timer.periodic(Duration(seconds: timerCnt), (Timer t) => shareLocation("1"));
+                timer = Timer.periodic(Duration(seconds: timerCnt), (Timer t  ) => shareLocation("1"));
               }else if(value == false){
                 shareLocation("0");
                 timer.cancel();
@@ -231,13 +310,20 @@ class _FindLocationState extends State<FindLocation>{
         ),
       ],
       bottomNavigationBar: Navbar(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.location_searching),
-        onPressed: (){
-          //timer2 = Timer.periodic(Duration(seconds: 1), (Timer t) => getPairLocation());
-          getPairLocation();
-        },
-      ),
+      floatingActionButton: 
+        Column(
+          children: <Widget>[
+            if(doesHavePair) ...[
+              FloatingActionButton(
+                child: Icon(Icons.location_searching),
+                onPressed: (){
+                  //timer2 = Timer.periodic(Duration(seconds: 1), (Timer t) => getPairLocation());
+                  getPairLocation();
+                },
+              ),
+            ],
+          ],
+        ),
     );
   }
 }
