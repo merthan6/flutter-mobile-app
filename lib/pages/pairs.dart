@@ -69,7 +69,7 @@ class _PairesPageState extends State<Pairs> {
         centerTitle: true,
       ),
       bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
+        data: Theme.of(context).copyWith(canvasColor: Colors.white),
         child: Navbar()
       ),
       drawer: ProfileDrawer(),

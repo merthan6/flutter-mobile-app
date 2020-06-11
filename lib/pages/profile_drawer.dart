@@ -62,12 +62,11 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
                     height : 100,
                     margin : EdgeInsets.only(top:10.0),
                     decoration : BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(62.5),
-                      border: Border.all(color: Colors.grey[100],width: 2,),
-                      image : DecorationImage(fit: BoxFit.cover, image : AssetImage('assets/images/Sembolic.jpg'),),
+                      border: Border.all(color: Colors.grey[100]),
+                      image : DecorationImage(image : AssetImage('assets/images/logo.png'),),
                     ),
-                    child: Icon(Icons.add_a_photo,color: Colors.grey,),
-                    alignment: Alignment(-1.1,1.35)
                   ),
                 ],
               ),

@@ -91,6 +91,7 @@ class _RegisterPageState extends State<Register> {
                   child: SingleChildScrollView(
                     child: Column(
                       children : <Widget>[
+                        Text("Kayıt Ol",style:TextStyle(color: Colors.grey,fontSize: 25.0),),
                         SizedBox(height:20,),
                         Container(
                           decoration: BoxDecoration(
@@ -98,8 +99,8 @@ class _RegisterPageState extends State<Register> {
                             borderRadius:BorderRadius.circular(10),
                             boxShadow:[BoxShadow(
                               color: Color.fromRGBO(8, 84, 145, .5),
-                              blurRadius: 20,
-                              offset: Offset(0, 10)
+                              blurRadius: 15,
+                              offset: Offset(0, 6)
                               )
                             ]
                           ),
@@ -108,7 +109,22 @@ class _RegisterPageState extends State<Register> {
                               textFieldContainer(name,"Adınız ve Soyadınız",Icons.person),
                               textFieldContainer(usernameC,"Kullanıcı adı",Icons.account_box),
                               textFieldContainer(email,"Email",Icons.mail),
-                              textFieldContainer(password,"Şifre",Icons.lock),
+                              Container(
+                                padding: EdgeInsets.all(5.0),
+                                decoration : BoxDecoration(
+                                  border: Border(bottom : BorderSide(color:Colors.grey[200]))
+                                ),
+                                child: TextField(
+                                  controller: password,
+                                  obscureText: true,
+                                  decoration : InputDecoration(
+                                    icon: Icon(Icons.lock,color: Colors.grey,),
+                                    hintText : "Şifre",
+                                    hintStyle : TextStyle(color:Colors.grey),
+                                    border: InputBorder.none
+                                  ),
+                                ),
+                              )
                             ]
                           ),
                         ),

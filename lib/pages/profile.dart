@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       drawer: ProfileDrawer(),
       bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),
+        data: Theme.of(context).copyWith(canvasColor: Colors.white),
         child: Navbar()
       ),
       body: Column(
@@ -140,21 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: <Widget>[
                         SizedBox(height: 35.0,),
                         ListTile(
-                          leading: Container(
-                            width: 60.0,
-                            height: 64.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(62.5),
-                              border: Border.all(
-                                color: Colors.grey[100],
-                                width: 2,
-                              ),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/images/Sembolic.jpg'),
-                              ),
-                            ),
-                          ),
+                          leading: Icon(Icons.person_pin,color: Colors.white, size: 60.0),
                           title: Text(
                             "$fullname",
                             style: TextStyle(
@@ -233,21 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           SizedBox(height: 35.0,),
                           ListTile(
-                            leading: Container(
-                              width: 60.0,
-                              height: 64.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(62.5),
-                                border: Border.all(
-                                  color: Colors.grey[100],
-                                  width: 2,
-                                ),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage('assets/images/Sembolic.jpg'),
-                                ),
-                              ),
-                            ),
+                            leading: Icon(Icons.person_pin,color: Colors.white, size: 60.0),
                             title: Text(
                               "$requestFullname",
                               style: TextStyle(

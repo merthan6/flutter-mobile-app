@@ -58,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
                 ]
               ),
             ),
-            SizedBox(height:10,),
             Expanded(
               child: Container(
                 decoration : BoxDecoration(
@@ -70,15 +69,16 @@ class _LoginPageState extends State<LoginPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children : <Widget>[
-                        SizedBox(height:40,),
+                        Text("Giriş",style:TextStyle(color: Colors.grey,fontSize: 25.0),),
+                        SizedBox(height:20,),
                         Container(
                           decoration:  BoxDecoration(
                           color: Colors.white,
                           borderRadius:BorderRadius.circular(10),
                             boxShadow:[BoxShadow(
                             color: Color.fromRGBO(8, 84, 145, .5),
-                            blurRadius: 20,
-                            offset: Offset(0, 10)
+                            blurRadius: 15,
+                            offset: Offset(0, 6)
                             )]
                           ),
                           child: Column(
