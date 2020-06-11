@@ -8,6 +8,7 @@ import 'package:location/location.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:newapp/pages/profile_drawer.dart';
 import 'package:http/http.dart' as http;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FindLocation extends StatefulWidget{
@@ -205,11 +206,13 @@ class _FindLocationState extends State<FindLocation>{
   @override
   void dispose(){
     if(_locationSubscription != null){
-        _locationSubscription.cancel();
-      }
+      _locationSubscription.cancel();
+    }
     super.dispose();
-    timer.cancel();
-    timer2.cancel();
+    if(timer != null)
+      timer.cancel();
+    if(timer2 != null)
+      timer2.cancel();
   }
 
   @override
@@ -310,20 +313,36 @@ class _FindLocationState extends State<FindLocation>{
         ),
       ],
       bottomNavigationBar: Navbar(),
-      floatingActionButton: 
-        Column(
-          children: <Widget>[
-            if(doesHavePair) ...[
-              FloatingActionButton(
-                child: Icon(Icons.location_searching),
-                onPressed: (){
-                  //timer2 = Timer.periodic(Duration(seconds: 1), (Timer t) => getPairLocation());
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          if(!doesHavePair) ...[
+            FloatingActionButton(
+              child: Icon(Icons.location_searching),
+              onPressed: (){
+                //timer2 = Timer.periodic(Duration(seconds: 1), (Timer t) => getPairLocation());
+                if(latitude == null || longitude == null){
+                  print(responseMessage);
+                  return Alert(
+                    context: context,
+                    title: "Location Error",
+                    desc: "Eşinizin lokasyon verisi henüz girilmemiş",
+                    buttons: [
+                      DialogButton(
+                        child: Text("Anladım"),
+                        onPressed: () => Navigator.pop(context),
+                      )
+                    ]
+                  ).show();
+                }
+                else{
                   getPairLocation();
-                },
-              ),
-            ],
-          ],
-        ),
+                }
+              },
+            ),
+          ], 
+        ],
+      ),
     );
   }
 }
