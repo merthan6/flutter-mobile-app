@@ -127,7 +127,7 @@ class _FindLocationState extends State<FindLocation>{
   );
 
   Future<Uint8List> getMarker() async {
-    ByteData byteData = await DefaultAssetBundle.of(context).load("assets/images/heart.png");
+    ByteData byteData = await DefaultAssetBundle.of(context).load("assets/images/128x128_heart.png");
     return byteData.buffer.asUint8List();
   }
 
