@@ -65,7 +65,8 @@ class _PairesPageState extends State<Pairs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pair"),
+        title: Text("Eşleşme"),
+        centerTitle: true,
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.grey[300]),

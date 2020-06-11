@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -39,14 +39,22 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Column(
           children:<Widget>[
-            SizedBox(height : 50,),
+            SizedBox(height : 30,),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children : <Widget>[
-                  Text("Login",style: TextStyle(color: Colors.white, fontSize : 40.0,fontWeight: FontWeight.w900),),
-                  SizedBox(height : 10,),
+                  Positioned(
+              child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/logo.png'),
+                  )
+                  )
+                  )
+                  ),
                 ]
               ),
             ),
@@ -86,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration : InputDecoration(
                                     icon: Icon(Icons.person,color: Colors.grey,),
                                     border: InputBorder.none,
-                                    hintText : "Email or Username",
+                                    hintText : "Email",
                                     hintStyle : TextStyle(color:Colors.grey)
                                   )
                                 ),
@@ -101,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                   obscureText: true,
                                   decoration : InputDecoration(
                                     icon: Icon(Icons.lock,color: Colors.grey,),
-                                    hintText : "Password",
+                                    hintText : "Şifre",
                                     hintStyle : TextStyle(color:Colors.grey),
                                     border: InputBorder.none
                                   ),
@@ -122,20 +130,20 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Center(
-                              child: Text("Login",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold,),),
+                              child: Text("Giriş Yap",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold,),),
                             ),
                           ),
                         SizedBox(height:30,),
                         Container(
                           child: InkWell(
                             onTap: () => { Navigator.pushReplacementNamed(context, '/register') },
-                            child: Text("Sign Up" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                            child: Text("Kayıt ol" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
                           ),
                         ),
                         SizedBox(height:10,),
                         Container(
                           child: InkWell(
-                            child: Text("Forgot Password" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
+                            child: Text("Şifremi unuttum" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
                           ),
                         ),
                       ],

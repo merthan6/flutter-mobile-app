@@ -193,7 +193,9 @@ class _FindLocationState extends State<FindLocation>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: Text("Find Pair"),),
+      appBar: AppBar(title: Text("Konum"),
+      centerTitle: true,
+      ),
       drawer: ProfileDrawer(),
       body:GoogleMap(
         zoomGesturesEnabled: true,

@@ -16,6 +16,17 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
   String username;
   String fullname;
   String emailUser;
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double screenHeight(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).height / dividedBy;
+  }
+
+  double screenWidth(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).width / dividedBy;
+  }
 
   void getSessions() async{
     final prefs = await SharedPreferences.getInstance();
@@ -105,32 +116,25 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
             title: Text('$authToken',
               style: TextStyle(
                 fontFamily: 'Montserrat',
-                fontSize: 20.0,
+                fontSize: 15.0,
                 color: Colors.black,
               ),
             ),
           ),
-          Expanded(
-            child: Align(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.exit_to_app,color : Colors.black,size : 30.0),
-                    onTap: () =>{ 
-                      Icons.forward_30,
-                      _logout()
-                    },
-                    title: Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 15.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              )
+          SizedBox(height: screenHeight(context,dividedBy:5),),
+          ListTile(
+            leading: Icon(Icons.exit_to_app,color : Colors.black,size : 30.0),
+            onTap: () =>{ 
+              Icons.forward_30,
+              _logout()
+            },
+            title: Text(
+              'Logout',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 15.0,
+                color: Colors.black,
+              ),
             ),
           ),
         ]

@@ -80,13 +80,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Profil',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.blue[400],
         elevation: 0.0,
       ),
@@ -287,7 +288,8 @@ class _ProfilePageState extends State<ProfilePage> {
               "You have no pair.",
               style: TextStyle(
                 color: Colors.black87,
-                fontFamily: 'Avenir'
+                fontFamily: 'Avenir',
+                fontSize: 15.0,
               ),
             ),
             SizedBox(height: screenHeight(context,dividedBy:80),),
@@ -295,16 +297,21 @@ class _ProfilePageState extends State<ProfilePage> {
               "Tap to the button and connect with your lover.",
               style: TextStyle(
                 color: Colors.black87,
-                fontFamily: 'Avenir'
+                fontFamily: 'Avenir',
+                fontSize: 15.0,
               ),
             ),
-            SizedBox(height: screenHeight(context,dividedBy:20),),
+            SizedBox(height: screenHeight(context,dividedBy:30),),
             RaisedButton(
               onPressed: (){
                 Navigator.pushReplacementNamed(context, '/pairs');
               },
-              child: Text("Connect!"),
-              color: Colors.blue[500],
+              shape: RoundedRectangleBorder( 
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              
+              child: Text("Connect"),
+              color: Colors.orange[500],
             )
           ],
         ],

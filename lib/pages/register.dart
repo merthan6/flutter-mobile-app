@@ -61,18 +61,25 @@ class _RegisterPageState extends State<Register> {
         ),
         child: Column(
           children:<Widget>[
-            SizedBox(height : 50,),
+            SizedBox(height : 20,),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children : <Widget>[
-                  Text("Register",style: TextStyle(color: Colors.white, fontSize : 40,fontWeight: FontWeight.w900),),
-                  SizedBox(height : 10,),
+                  Positioned(
+              child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/images/logo.png'),
+                  )
+                  )
+                  )
+                  ),
                 ]
               ),
             ),
-            SizedBox(height:10,),
             Expanded(
               child: Container(
                 decoration : BoxDecoration(
@@ -98,10 +105,10 @@ class _RegisterPageState extends State<Register> {
                           ),
                           child: Column(
                             children : <Widget>[
-                              textFieldContainer(name,"Your Fullname",Icons.person),
-                              textFieldContainer(usernameC,"Username",Icons.account_box),
+                              textFieldContainer(name,"Adınız ve Soyadınız",Icons.person),
+                              textFieldContainer(usernameC,"Kullanıcı adı",Icons.account_box),
                               textFieldContainer(email,"Email",Icons.mail),
-                              textFieldContainer(password,"Password",Icons.lock),
+                              textFieldContainer(password,"Şifre",Icons.lock),
                             ]
                           ),
                         ),
@@ -115,7 +122,7 @@ class _RegisterPageState extends State<Register> {
                             borderRadius: BorderRadius.circular(18.0),
                           ),
                           child: Center(
-                            child: Text("Register",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
+                            child: Text("Kayıt ol",style:TextStyle(color: Colors.white,fontWeight :FontWeight.bold),),
                           ),
                         ),
                         SizedBox(height: 20.0,),
@@ -124,7 +131,7 @@ class _RegisterPageState extends State<Register> {
                             onTap: () => {
                               Navigator.pushReplacementNamed(context, '/')
                             },
-                            child: Text("Already have an account?",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),),
+                            child: Text("Zaten hesabınız var mı?",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),),
                           ),
                         ),
                         SizedBox(height:10,),
