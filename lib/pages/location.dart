@@ -127,7 +127,7 @@ class _FindLocationState extends State<FindLocation>{
   );
 
   Future<Uint8List> getMarker() async {
-    ByteData byteData = await DefaultAssetBundle.of(context).load("assets/images/car_icon.png");
+    ByteData byteData = await DefaultAssetBundle.of(context).load("assets/images/heart.png");
     return byteData.buffer.asUint8List();
   }
 
@@ -226,18 +226,20 @@ class _FindLocationState extends State<FindLocation>{
       Column(
         children: <Widget>[
           if(doesHavePair == true)...[
-            GoogleMap(
-              zoomGesturesEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: initialLocation,
-              markers: Set.of((marker != null) ? [marker]: []),
-              circles: Set.of((circle != null) ? [circle]: []),
-              onMapCreated: (GoogleMapController controller){
-                _controller = controller;
-              },
-              onCameraMove:(CameraPosition cameraPosition){
-                initZoom = cameraPosition.zoom;
-              },
+            Expanded(
+                          child: GoogleMap(
+                zoomGesturesEnabled: true,
+                mapType: MapType.normal,
+                initialCameraPosition: initialLocation,
+                markers: Set.of((marker != null) ? [marker]: []),
+                circles: Set.of((circle != null) ? [circle]: []),
+                onMapCreated: (GoogleMapController controller){
+                  _controller = controller;
+                },
+                onCameraMove:(CameraPosition cameraPosition){
+                  initZoom = cameraPosition.zoom;
+                },
+              ),
             ),
           ],
           if(doesHavePair == false)...[
@@ -293,7 +295,7 @@ class _FindLocationState extends State<FindLocation>{
         ],
       ),
       persistentFooterButtons: <Widget>[
-        Text("Share your location"),
+        Text("Konum verilerini paylaş"),
         Switch(
           value: isSwitched,
           onChanged: (value){
@@ -316,7 +318,7 @@ class _FindLocationState extends State<FindLocation>{
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          if(!doesHavePair) ...[
+          if(doesHavePair) ...[
             FloatingActionButton(
               child: Icon(Icons.location_searching),
               onPressed: (){
@@ -325,11 +327,11 @@ class _FindLocationState extends State<FindLocation>{
                   print(responseMessage);
                   return Alert(
                     context: context,
-                    title: "Location Error",
-                    desc: "Eşinizin lokasyon verisi henüz girilmemiş",
+                    title: "Konum Bulma Hatası",
+                    desc: "Eşleştiğiniz kişinin konum verisi henüz girilmemiş.",
                     buttons: [
                       DialogButton(
-                        child: Text("Anladım"),
+                        child: Text("Anladım."),
                         onPressed: () => Navigator.pop(context),
                       )
                     ]
