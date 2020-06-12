@@ -252,10 +252,10 @@ class _FindLocationState extends State<FindLocation>{
               endIndent: 20,
             ),
             SizedBox(height: screenHeight(context,dividedBy: 18)),
-            Icon(Icons.warning, color: Colors.red,size: screenHeight(context,dividedBy: 18),),
+            Icon(Icons.warning, color: Colors.red,size: screenHeight(context,dividedBy: 16),),
             SizedBox(height: screenHeight(context,dividedBy: 18)),
             Text(
-              "You have no pair.",
+              "Herhangi bir eşleşmeniz yok.",
               style: TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Avenir',
@@ -264,7 +264,7 @@ class _FindLocationState extends State<FindLocation>{
             ),
             SizedBox(height: screenHeight(context,dividedBy:80),),
             Text(
-              "Tap to the button and connect with your lover.",
+              'Eşleşmek için lütfen "Bağlan" tuşuna basınız.',
               style: TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Avenir',
@@ -280,7 +280,7 @@ class _FindLocationState extends State<FindLocation>{
                 borderRadius: BorderRadius.circular(50.0),
               ),
               
-              child: Text("Connect"),
+              child: Text("Bağlan"),
               color: Colors.orange[500],
             ),
             SizedBox(height: screenHeight(context,dividedBy: 15)),

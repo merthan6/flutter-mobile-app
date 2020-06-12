@@ -58,16 +58,12 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
               child: Column(
                 children: <Widget>[
                   Container(
-                    width : 100,
-                    height : 100,
                     margin : EdgeInsets.only(top:10.0),
-                    decoration : BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(62.5),
-                      border: Border.all(color: Colors.grey[100]),
-                      image : DecorationImage(image : AssetImage('assets/images/logo.png'),),
-                    ),
-                  ),
+                    height: 100,
+                    decoration: BoxDecoration(
+                     image: DecorationImage(image: AssetImage('assets/images/logo.png'), )
+                    )
+                  )
                 ],
               ),
             ),
@@ -128,7 +124,7 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
               _logout()
             },
             title: Text(
-              'Logout',
+              'Çıkış Yap',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 15.0,

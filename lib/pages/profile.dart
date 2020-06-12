@@ -257,7 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: screenHeight(context,dividedBy: 9)),
             Text(
-              "You have no pair.",
+              "Herhangi bir eşleşmeniz yok.",
               style: TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Avenir',
@@ -266,7 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: screenHeight(context,dividedBy:80),),
             Text(
-              "Tap to the button and connect with your lover.",
+              'Eşleşmek için lütfen "Bağlan" tuşuna basınız.',
               style: TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Avenir',
@@ -282,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(50.0),
               ),
               
-              child: Text("Connect"),
+              child: Text("Bağlan"),
               color: Colors.orange[500],
             )
           ],

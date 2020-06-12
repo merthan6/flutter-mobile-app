@@ -162,7 +162,7 @@ class _PairesPageState extends State<Pairs> {
                           onPressed: resetAuthToken,
                           color: Colors.blue[500],
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                          child: Center(child: Text("Sıfırla",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
+                          child: Center(child: Text("Yenile",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
                         ),
                       ],
                     ),
@@ -170,6 +170,35 @@ class _PairesPageState extends State<Pairs> {
                 ),
               ),
             ),
+            if(true)(   
+              Container(
+                height : 180,
+                child :Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                  elevation: 5.0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('Eşleşmeyi Kaldır',style: TextStyle(fontSize : 20,fontWeight: FontWeight.w900),),
+                        subtitle: Text(''), 
+                      ),
+                      SizedBox(height : 30,),
+                      ButtonBar(
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: resetAuthToken,
+                            color: Colors.blue[500],
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                            child: Center(child: Text("Kaldır",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            )
           ]
         ),
       ),
