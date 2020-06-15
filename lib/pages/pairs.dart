@@ -239,6 +239,7 @@ class _PairesPageState extends State<Pairs> {
       if(datauser["data"]["success"] == false){
         print("There is no matching token!");
       } else {
+        _showMyDialog("Request sended.");
         print("Request created");
       }  
     } else {
@@ -290,5 +291,32 @@ class _PairesPageState extends State<Pairs> {
     } else {
      // Service unavailable!
     }
+  }
+
+  Future<void> _showMyDialog(text) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Notice'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(text),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK!'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
