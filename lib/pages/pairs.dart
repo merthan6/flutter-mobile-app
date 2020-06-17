@@ -57,6 +57,27 @@ class _PairesPageState extends State<Pairs> {
     }
   }
 
+  Future<List> cancelPair() async {
+    Map<String,String> headers = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization':'$apiToken'
+    };
+
+    final response = await http.post("http://34.72.70.18/api/users/pairs/cancel", headers: headers);
+
+    if(response.statusCode == 200){
+
+      var datauser = json.decode(response.body);
+
+      if(datauser["data"]["success"] == true) {
+        print(datauser["data"]["message"]);
+        checkStatus = false;
+        _showMyDialog("Eşleşme Kaldırıldı!");
+      } 
+    }
+  }
+
   initState(){
     super.initState();
     doInitialActions();
@@ -76,7 +97,7 @@ class _PairesPageState extends State<Pairs> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[ 
-            if(checkStatus)(
+            if(checkStatus == true)(
               Container(
                 height : 180,
                 child :Card(
@@ -170,7 +191,7 @@ class _PairesPageState extends State<Pairs> {
                 ),
               ),
             ),
-            if(true)(   
+            if(checkStatus == true)(   
               Container(
                 height : 180,
                 child :Card(
@@ -187,7 +208,7 @@ class _PairesPageState extends State<Pairs> {
                       ButtonBar(
                         children: <Widget>[
                           RaisedButton(
-                            onPressed: resetAuthToken,
+                            onPressed: cancelPair,
                             color: Colors.blue[500],
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                             child: Center(child: Text("Kaldır",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),),),
@@ -239,7 +260,7 @@ class _PairesPageState extends State<Pairs> {
       if(datauser["data"]["success"] == false){
         print("There is no matching token!");
       } else {
-        _showMyDialog("Request sended.");
+        _showMyDialog("İstek Gönderildi!");
         print("Request created");
       }  
     } else {

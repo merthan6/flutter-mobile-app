@@ -227,7 +227,7 @@ class _FindLocationState extends State<FindLocation>{
         children: <Widget>[
           if(doesHavePair == true)...[
             Expanded(
-                          child: GoogleMap(
+                child: GoogleMap(
                 zoomGesturesEnabled: true,
                 mapType: MapType.normal,
                 initialCameraPosition: initialLocation,
@@ -295,24 +295,26 @@ class _FindLocationState extends State<FindLocation>{
         ],
       ),
       persistentFooterButtons: <Widget>[
-        Text("Konum verilerini paylaş"),
-        Switch(
-          value: isSwitched,
-          onChanged: (value){
-            setState(() {
-              isSwitched=value;
-              if(value == true){
-                timerCnt = 5;
-                timer = Timer.periodic(Duration(seconds: timerCnt), (Timer t  ) => shareLocation("1"));
-              }else if(value == false){
-                shareLocation("0");
-                timer.cancel();
-              }
-            });
-          },
-          activeTrackColor: Colors.lightGreenAccent,
-          activeColor: Colors.green,
-        ),
+        if(doesHavePair == true)...[
+          Text("Konum verilerini paylaş"),
+          Switch(
+            value: isSwitched,
+            onChanged: (value){
+              setState(() {
+                isSwitched=value;
+                if(value == true){
+                  timerCnt = 5;
+                  timer = Timer.periodic(Duration(seconds: timerCnt), (Timer t  ) => shareLocation("1"));
+                }else if(value == false){
+                  shareLocation("0");
+                  timer.cancel();
+                }
+              });
+            },
+            activeTrackColor: Colors.lightGreenAccent,
+            activeColor: Colors.green,
+          ),
+        ]
       ],
       bottomNavigationBar: Navbar(),
       floatingActionButton: Row(

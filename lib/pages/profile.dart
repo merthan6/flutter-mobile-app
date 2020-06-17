@@ -70,28 +70,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  void cancelPair() async {
-   
-    Map<String,String> headers = {
-      'Content-type' : 'application/json', 
-      'Accept': 'application/json',
-      'Authorization':'$apiToken'
-    };
-
-    final response = await http.post("http://34.72.70.18/api/users/pairs/cancel", headers: headers);
-
-    if(response.statusCode == 200){
-
-      var datauser = json.decode(response.body);
-
-      if(datauser["data"]["success"] != true) {
-        setState(() {
-          checkStatus = true;
-        });
-      } 
-    }
-  }
-
   @override
   void initState() {
     getUserInfo();
@@ -199,20 +177,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: EdgeInsets.only(top: 40.0, bottom: 0, left: 10.0, right: 0),
                   child: Icon(Icons.arrow_upward,color: Colors.blueGrey, size: 80.0),
                 )    
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.cancel),
-                  onPressed: () {
-                    cancelPair();
-                    setState(() {
-                      checkStatus = false;
-                    });
-                  },
-                ),
-                Text('If you want to cancel pair please click here!')
               ],
             ),
             Container(
