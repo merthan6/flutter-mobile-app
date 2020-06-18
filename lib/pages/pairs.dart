@@ -19,6 +19,7 @@ class _PairesPageState extends State<Pairs> {
   String authToken;
   String newAuthToken;
   bool checkStatus = false;
+  bool checkPairStatus = false;
 
   String requestUsername;
   String requestFullname;
@@ -40,6 +41,19 @@ class _PairesPageState extends State<Pairs> {
       'Accept': 'application/json',
       'Authorization':'$apiToken'
     };
+
+    final response2 = await http.post("http://34.72.70.18/api/users/checkPair", headers: headers);
+    if(response2.statusCode == 200){
+      var datauser = json.decode(response2.body);
+      setState(() {
+        checkPairStatus = false;
+      });
+      if(datauser["data"]["success"] == true) {
+        setState(() {
+          checkPairStatus = true;
+        });
+      }
+    }
 
     var body = json.encode({"authtoken":authToken});
     final response = await http.post("http://34.72.70.18/api/users/pairs/check", body: body, headers: headers);
@@ -70,7 +84,9 @@ class _PairesPageState extends State<Pairs> {
       var datauser = json.decode(response.body);
 
       if(datauser["data"]["success"] == true) {
-        checkStatus = false;
+        setState(() {
+          checkPairStatus = false;
+        });
         _showMyDialog("Eşleşme Kaldırıldı!");
       } 
     }
@@ -189,7 +205,7 @@ class _PairesPageState extends State<Pairs> {
                 ),
               ),
             ),
-            if(checkStatus == true)(   
+            if(checkPairStatus == true)(   
               Container(
                 height : 180,
                 child :Card(
