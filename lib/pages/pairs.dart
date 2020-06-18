@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:newapp/pages/profile_drawer.dart';
@@ -57,7 +56,7 @@ class _PairesPageState extends State<Pairs> {
     }
   }
 
-  Future<List> cancelPair() async {
+  Future<void> cancelPair() async {
     Map<String,String> headers = {
       'Content-type' : 'application/json', 
       'Accept': 'application/json',
@@ -225,7 +224,7 @@ class _PairesPageState extends State<Pairs> {
       ),
     );
   }
-  Future<List> resetAuthToken() async {
+  Future<void> resetAuthToken() async {
     
     final response = await http.post("http://34.72.70.18/api/users/resettoken", headers: {
       "Authorization": apiToken,
@@ -248,7 +247,7 @@ class _PairesPageState extends State<Pairs> {
     }
   }
 
-  Future<List> requestPair() async {
+  Future<void> requestPair() async {
     final response = await http.post("http://34.72.70.18/api/users/pairs/create", headers: {
       "Authorization": apiToken,
     },
@@ -268,7 +267,7 @@ class _PairesPageState extends State<Pairs> {
     }
   }
 
-  Future<List> acceptRequest() async {
+  Future<void> acceptRequest() async {
     final response = await http.post("http://34.72.70.18/api/users/pairs/update", headers: {
       "Authorization": apiToken,
     },
@@ -291,7 +290,7 @@ class _PairesPageState extends State<Pairs> {
     }
   }
 
-  Future<List> rejectRequest() async {
+  Future<void> rejectRequest() async {
     final response = await http.post("http://34.72.70.18/api/users/pairs/update", headers: {
       "Authorization": apiToken,
     },

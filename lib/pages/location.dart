@@ -105,7 +105,7 @@ class _FindLocationState extends State<FindLocation>{
     });
 
     print("Location Update: 5 seconds");
-    final response = await http.post("http://34.72.70.18/api/users/savelocation", headers: headers, body: body);
+    await http.post("http://34.72.70.18/api/users/savelocation", headers: headers, body: body);
   }
 
   @override
@@ -342,6 +342,7 @@ class _FindLocationState extends State<FindLocation>{
                 else{
                   getPairLocation();
                 }
+               return true;
               },
             ),
           ], 

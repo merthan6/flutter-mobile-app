@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:newapp/pages/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String user_id;
+String userId;
 String apiToken;
 String authToken;
 String username;
@@ -123,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height:20,),
                           RaisedButton(
                             onPressed: () {
-                              _login();
+                              login();
                             },
                             color: Colors.blue[500],
                             shape: RoundedRectangleBorder( 
@@ -157,27 +156,8 @@ class _LoginPageState extends State<LoginPage> {
       ) 
     );
   }
-  Future _buildErrorDialog(BuildContext context, _message) {
-    return showDialog(
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Error Message'),
-          content: Text(_message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }
-            )
-          ],
-        );
-      },
-      context: context,
-    );
-  }
 
-  Future<List> _login() async {
+  Future<void> login() async {
     final response = await http.post("http://34.72.70.18/api/users/login", body: {
       "email": email.text.trim(),
       "password": password.text.trim()
@@ -191,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         setState(() {
           print(datauser);
-          user_id = datauser["data"]["data"]["id"];
+          userId = datauser["data"]["data"]["id"];
           apiToken = datauser["data"]["token"];
           authToken = datauser["data"]["data"]["authtoken"];
           username = datauser["data"]["data"]["username"];
@@ -204,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         final prefs = await SharedPreferences.getInstance();
-        prefs.setString("user_id", user_id);
+        prefs.setString("user_id", userId);
         prefs.setString("apiToken","Bearer " + apiToken);
         prefs.setString("authToken", authToken);
         prefs.setString("username", username);

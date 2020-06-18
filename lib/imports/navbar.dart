@@ -29,7 +29,7 @@ class _NavbarState extends State<Navbar> {
     gotoPage(page);
   }
 
-  Widget gotoPage(int page){
+  gotoPage(int page){
     if(page == 0){
       Navigator.pushReplacementNamed(context, '/location');
     }

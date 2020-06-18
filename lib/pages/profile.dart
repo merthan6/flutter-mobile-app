@@ -323,9 +323,7 @@ class CustomCardShapePainter extends CustomPainter {
     canvas.drawPath(path, paint);
   }
 
-  @override
-  bool shouldRepa(Canvas canvas, Sigate) {
-    // TODO: implement shouldRepaint
+  bool shouldRepa(Canvas canvas, sigate) {
     throw UnimplementedError();
   }
 

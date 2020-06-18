@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +33,7 @@ class _RegisterPageState extends State<Register> {
 
   void checkRegistiration(){
     if(email.text.isNotEmpty && password.text.isNotEmpty && name.text.isNotEmpty && usernameC.text.isNotEmpty){
-      _Register();
+      register();
     }else{
       setState(() {
         msg="Fields must be filled!";
@@ -162,26 +160,7 @@ class _RegisterPageState extends State<Register> {
       ) 
     );
   }
-  Future _buildErrorDialog(BuildContext context, _message) {
-    return showDialog(
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Error Message'),
-          content: Text(_message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }
-            )
-          ],
-        );
-      },
-      context: context,
-    );
-  }
-  Future<List> _Register() async {
+  Future<void> register() async {
     final response = await http.post("http://34.72.70.18/api/users/register", body: {
       "email": email.text.trim(),
       "password": password.text.trim(),

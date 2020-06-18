@@ -8,9 +8,7 @@ class ProfileDrawer extends StatefulWidget {
 }
 
 class _ProfileDrawerState extends State<ProfileDrawer>{
-  @override
-
-  String user_id;
+  String userId;
   String apiToken;
   String authToken;
   String username;
@@ -31,7 +29,7 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
   void getSessions() async{
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      user_id = prefs.getString("user_id");
+      userId = prefs.getString("user_id");
       apiToken = prefs.getString("apiToken");
       authToken = prefs.getString("authToken");
       username = prefs.getString("username");

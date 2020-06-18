@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:newapp/pages/location.dart';
 import 'package:newapp/pages/login.dart';
@@ -8,7 +6,6 @@ import 'package:newapp/pages/register.dart';
 import 'package:newapp/pages/Home.dart';
 import 'package:newapp/pages/pairs.dart';
 import 'package:newapp/pages/profile.dart';
-import 'package:newapp/pages/location.dart';
 void main() => runApp(
   MaterialApp(
     debugShowCheckedModeBanner: false,
