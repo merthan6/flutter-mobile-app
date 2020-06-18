@@ -70,7 +70,6 @@ class _PairesPageState extends State<Pairs> {
       var datauser = json.decode(response.body);
 
       if(datauser["data"]["success"] == true) {
-        print(datauser["data"]["message"]);
         checkStatus = false;
         _showMyDialog("Eşleşme Kaldırıldı!");
       } 

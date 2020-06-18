@@ -65,15 +65,13 @@ class _RegisterPageState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children : <Widget>[
-                  Positioned(
-              child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
+                  Container(
+                    height: 100,
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage('assets/images/logo.png'),
-                  )
-                  )
-                  )
+                        image: AssetImage('assets/images/logo.png'),
+                      )
+                    )
                   ),
                 ]
               ),

@@ -31,13 +31,14 @@ class StartState extends State<Home> {
           SizedBox(
             height: 200,
           ),
-          Positioned(
-              child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/logo.png'),
-                  )))),
+          Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage('assets/images/logo.png'),
+              )
+            )
+          ),
           SizedBox(
             height: 30,
           ),
