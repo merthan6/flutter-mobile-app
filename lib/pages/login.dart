@@ -23,7 +23,25 @@ class _LoginPageState extends State<LoginPage> {
   final email = TextEditingController();
   final password = TextEditingController();
   String msg='';
-  
+
+  @override
+  void initState() {
+    super.initState();
+    checkRememberMe();
+  }
+
+  checkRememberMe() async{
+    final prefs = await SharedPreferences.getInstance();
+    if(prefs.getBool("isLoggedIn") == true){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,6 +207,7 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString("email", emailUser);
         prefs.setString("pair_id", myPairID);
         prefs.setInt("navbarIndex",1);
+        prefs.setBool("isLoggedIn", true);
 
         Navigator.push(
           context,

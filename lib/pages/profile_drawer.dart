@@ -59,7 +59,7 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
                     margin : EdgeInsets.only(top:10.0),
                     height: 100,
                     decoration: BoxDecoration(
-                     image: DecorationImage(image: AssetImage('assets/images/logo.png'), )
+                      image: DecorationImage(image: AssetImage('assets/images/logo.png'), )
                     )
                   )
                 ],
@@ -143,6 +143,7 @@ class _ProfileDrawerState extends State<ProfileDrawer>{
     prefs.setString("username", null);
     prefs.setString("fullname", null);
     prefs.setString("email", null);
+    prefs.setBool("isLoggedIn", false);
     Navigator.push(
       context,
       MaterialPageRoute(

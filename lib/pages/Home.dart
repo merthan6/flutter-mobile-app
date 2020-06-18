@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:newapp/pages/profile.dart';
 import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -12,8 +15,21 @@ class StartState extends State<Home> {
   void initState() {
     super.initState();
     startTimer();
+    checkRememberMe();
   }
 
+  checkRememberMe() async{
+    final prefs = await SharedPreferences.getInstance();
+    if(prefs.getBool("isLoggedIn") == true){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+      );
+    }
+  }
+  
   startTimer() async {
     var duration = Duration(seconds: 2);
     return Timer(duration, route);

@@ -110,6 +110,7 @@ class _FindLocationState extends State<FindLocation>{
 
   @override
   void initState() {
+    super.initState();
     doStuff();
   }
 

@@ -17,6 +17,7 @@ class _NavbarState extends State<Navbar> {
 
   @override
   void initState(){
+    super.initState();
     getNavbarIndex();
   }
   
