@@ -155,12 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text("Kayıt ol" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
                           ),
                         ),
-                        SizedBox(height:10,),
-                        Container(
-                          child: InkWell(
-                            child: Text("Şifremi unuttum" ,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,decoration:TextDecoration.underline),)
-                          ),
-                        ),
                       ],
                     ),
                   ),
