@@ -11,7 +11,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="PairLoc"
-        android:icon="@mipmap/logo">
+        android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBomy8bKFSexKSHYNw-LgijekXivDSZAeE"/> <!-- ADD GOOGLE MAPS API KEY VALUE -->
         <activity
             android:name=".MainActivity"
