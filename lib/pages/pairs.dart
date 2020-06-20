@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:newapp/imports/navbar.dart';
 import 'package:newapp/pages/profile_drawer.dart';
@@ -265,22 +266,26 @@ class _PairesPageState extends State<Pairs> {
   }
 
   Future<void> requestPair() async {
-    final response = await http.post("http://34.72.70.18/api/users/pairs/create", headers: {
-      "Authorization": apiToken,
-    },
-    body: {
-      "receiver_token": receiverTokenCTRL.text.trim(),
-    });
-    if(response.statusCode == 200){
-      var datauser = json.decode(response.body);
-      if(datauser["data"]["success"] == false){
-        print("There is no matching token!");
-      } else {
-        _showMyDialog("İstek Gönderildi!");
-        print("Request created");
-      }  
+    if(receiverTokenCTRL.text.trim() == ""){
+      _showMyDialog("Bağlantı kodu boş olamaz!");
     } else {
-     // Service unavailable!
+      final response = await http.post("http://34.72.70.18/api/users/pairs/create", headers: {
+        "Authorization": apiToken,
+      },
+      body: {
+        "receiver_token": receiverTokenCTRL.text.trim(),
+      });
+      if(response.statusCode == 200){
+        var datauser = json.decode(response.body);
+        if(datauser["data"]["success"] == false){
+          print("There is no matching token!");
+        } else {
+          _showMyDialog("İstek Gönderildi!");
+          print("Request created");
+        }  
+      } else {
+        _showMyDialog("Şuanda bu işlemi gerçekleştiremiyoruz!");
+      }
     }
   }
 
