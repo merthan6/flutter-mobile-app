@@ -315,7 +315,7 @@ class _PairesPageState extends State<Pairs> {
       "Authorization": apiToken,
     },
     body: {
-      "approve": "0",
+      "approve": "-1",
       "sender_id": requestSenderID,
     });
     if(response.statusCode == 200){
