@@ -208,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString("fullname", fullname);
         prefs.setString("email", emailUser);
         prefs.setString("pair_id", myPairID);
-        prefs.setString("pw",password.text.trim());
         prefs.setInt("navbarIndex",1);
         prefs.setBool("isLoggedIn", true);
 

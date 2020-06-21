@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:newapp/pages/profile.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,26 +21,7 @@ class StartState extends State<Home> {
   checkRememberMe() async{
     final prefs = await SharedPreferences.getInstance();
     if(prefs.getBool("isLoggedIn") == true){
-
-    var pw = prefs.getString("pw");
-    String apiToken;
-
-    final response = await http.post("http://34.72.70.18/api/users/login", body: {
-      "email": prefs.getString("email"),
-      "password": pw,
-    }); 
-    
-    if(response.statusCode == 200){
-      var datauser = json.decode(response.body);
-      if(datauser["data"]["success"] == true){
-        setState(() {
-          apiToken = datauser["data"]["token"];
-        });
-        prefs.setString("apiToken","Bearer " + apiToken);
-      }  
-    }
-
-    Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ProfilePage(),
