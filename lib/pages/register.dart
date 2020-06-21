@@ -159,6 +159,14 @@ class _RegisterPageState extends State<Register> {
     );
   }
   Future<void> register() async {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+").hasMatch(email.text.trim());
+    if(emailValid==false)
+    {
+      setState(() {
+        msg="Invalid email!";
+      });
+      return;
+    }
     final response = await http.post("http://34.72.70.18/api/users/register", body: {
       "email": email.text.trim(),
       "password": password.text.trim(),
