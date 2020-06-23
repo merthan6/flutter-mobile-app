@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             color: Colors.white,
-          ),
+          ),  
         ),
         centerTitle: true,
         backgroundColor: Colors.blue[400],
