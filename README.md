@@ -48,3 +48,28 @@ Please check the backend part in php-restful-api repository.
 Now it's time to install the application!
 
 If you are using an Android phone, it is very easy to install our application.
+
+<br>
+
+## Pages
+
+<p align="center">
+  <a href="#">
+    <img src="https://github.com/atakde/flutter-mobile-app/blob/master/assets/PAge.png" alt="page" width="850" height="300">
+  </a>
+ </p>
+ <br>
+ <p align="center">
+  <a href="#">
+    <img src="https://github.com/atakde/flutter-mobile-app/blob/master/assets/images/register.png" alt="page" width="280" height="400">
+  </a>
+  
+  
+  <a href="#">
+    <img src="https://github.com/atakde/flutter-mobile-app/blob/master/assets/images/e%C5%9Fle%C5%9Fme.png" alt="page" width="280" height="400">
+  </a>
+  <a href="#">
+    <img src="https://github.com/atakde/flutter-mobile-app/blob/master/assets/images/profil.png" alt="page" width="280" height="400">
+  </a>
+ </p>
+
